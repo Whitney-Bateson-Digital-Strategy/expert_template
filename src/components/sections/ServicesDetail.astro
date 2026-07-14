@@ -1,0 +1,122 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface ServiceItem {
+  id?: string;
+  label: string;
+  name: string;
+  tagline?: string;
+  description: string;
+  isForYou: string[];
+  includes: string[];
+  cta: { text: string; href: string };
+  image: { src: string; alt: string; width?: number; height?: number };
+}
+
+export interface Props {
+  eyebrow?: string;
+  heading?: string;
+  intro?: string;
+  services: ServiceItem[];
+  background?: 'base' | 'subtle';
+}
+
+const { eyebrow, heading, intro, services, background = 'base' } = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base: 'bg-bg-base',
+  subtle: 'bg-bg-subtle',
+};
+---
+
+<SectionWrapper class={bgMap[background]} bg={background}>
+
+  {(eyebrow || heading || intro) && (
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-16 md:mb-24">
+      <div class="lg:col-span-8">
+        {eyebrow && (
+          <div class="flex items-center gap-4 mb-6">
+            <span class="h-px w-8 bg-border-strong" aria-hidden="true"></span>
+            <p class="eyebrow text-primary">{eyebrow}</p>
+          </div>
+        )}
+        {heading && <h2 class="text-4xl md:text-6xl leading-[1.03]" set:html={heading} />}
+      </div>
+      {intro && <div class="lg:col-span-4"><p class="text-text-muted leading-relaxed">{intro}</p></div>}
+    </div>
+  )}
+
+  <div class="flex flex-col gap-24 md:gap-36">
+    {services.map((service, i) => {
+      const imageLeft = i % 2 === 0;
+      return (
+        <div id={service.id} class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start scroll-mt-28" data-reveal>
+
+          <!-- Image -->
+          <div class={`lg:col-span-6 ${imageLeft ? '' : 'lg:order-last'}`}>
+            <img
+              src={service.image.src}
+              alt={service.image.alt}
+              class="w-full aspect-[4/5] object-cover grayscale-[15%]"
+              width={service.image.width}
+              height={service.image.height}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <!-- Text -->
+          <div class="lg:col-span-6 lg:pt-2">
+            <div class="flex items-center gap-4 mb-5">
+              <span class="font-heading text-3xl text-border-strong">{String(i + 1).padStart(2, '0')}</span>
+              <p class="eyebrow text-primary">{service.label}</p>
+            </div>
+
+            <h2 class="text-3xl md:text-5xl leading-[1.05]">{service.name}</h2>
+
+            {service.tagline && (
+              <p class="mt-5 font-heading text-xl md:text-2xl italic leading-snug text-text-heading">
+                {service.tagline}
+              </p>
+            )}
+
+            <p class="mt-6 text-text-muted leading-relaxed">{service.description}</p>
+
+            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
+              <div class="border-t border-border pt-5">
+                <p class="eyebrow text-text-heading mb-4">This is for you if</p>
+                <ul class="flex flex-col gap-2.5">
+                  {service.isForYou.map((item) => (
+                    <li class="flex gap-3 items-start text-text-muted leading-relaxed">
+                      <Icon name="tabler:minus" class="w-4 h-4 mt-1.5 text-primary flex-shrink-0" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div class="border-t border-border pt-5">
+                <p class="eyebrow text-text-heading mb-4">What's included</p>
+                <ul class="flex flex-col gap-2.5">
+                  {service.includes.map((item) => (
+                    <li class="flex gap-3 items-start text-text-muted leading-relaxed">
+                      <Icon name="tabler:minus" class="w-4 h-4 mt-1.5 text-primary flex-shrink-0" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div class="mt-9">
+              <Button href={service.cta.href} variant="primary">{service.cta.text}</Button>
+            </div>
+          </div>
+
+        </div>
+      );
+    })}
+  </div>
+
+</SectionWrapper>

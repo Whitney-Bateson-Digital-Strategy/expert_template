@@ -1,0 +1,123 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface Fact {
+  icon: string;
+  label: string;
+  fact: string;
+}
+
+export interface Props {
+  eyebrow?: string;
+  heading?: string;
+  facts: Fact[];
+  background?: 'base' | 'subtle' | 'accent-light' | 'accent2-light' | 'accent' | 'primary';
+}
+
+const {
+  eyebrow = 'Off the record',
+  heading = 'A few things about me.',
+  facts,
+  background = 'subtle',
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base: 'bg-bg-base',
+  subtle: 'bg-bg-subtle',
+  'accent-light': 'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+  accent: 'bg-accent',
+  primary: 'bg-primary',
+};
+
+const isDark = background === 'accent' || background === 'primary';
+const headingText = isDark ? 'text-white' : '';
+const eyebrowColor = isDark ? 'text-white/60' : 'text-primary';
+const hintColor = isDark ? 'text-white/50' : 'text-text-muted';
+---
+
+<section class={`section-py ${bgMap[background]}`} data-section-bg={background}>
+  <div class="container-page">
+
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12 md:mb-16">
+      <div>
+        {eyebrow && (
+          <div class="flex items-center gap-4 mb-5">
+            <span class={`h-px w-8 ${isDark ? 'bg-white/40' : 'bg-border-strong'}`} aria-hidden="true"></span>
+            <p class={`eyebrow ${eyebrowColor}`}>{eyebrow}</p>
+          </div>
+        )}
+        {heading && <h2 class={`text-4xl md:text-5xl ${headingText}`}>{heading}</h2>}
+      </div>
+      <p class={`text-sm ${hintColor}`}>Hover or tap to flip.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+      {facts.map((fact) => (
+        <div class="fun-fact-card" role="button" tabindex="0" aria-label={`${fact.label}: ${fact.fact}`}>
+          <div class="fun-fact-inner">
+            <!-- Front -->
+            <div class="fun-fact-face fun-fact-front bg-bg-card border border-border">
+              <Icon name={fact.icon} class="w-8 h-8 text-primary mb-4" aria-hidden="true" />
+              <p class="font-heading text-2xl text-text-heading text-center leading-snug">{fact.label}</p>
+            </div>
+            <!-- Back -->
+            <div class="fun-fact-face fun-fact-back bg-accent text-white">
+              <p class="text-[0.98rem] text-white/90 text-center leading-relaxed">{fact.fact}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .fun-fact-card {
+    perspective: 1000px;
+    cursor: pointer;
+    min-height: 200px;
+  }
+  .fun-fact-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @media (hover: hover) {
+    .fun-fact-card:hover .fun-fact-inner { transform: rotateY(180deg); }
+  }
+  .fun-fact-card.is-flipped .fun-fact-inner { transform: rotateY(180deg); }
+  .fun-fact-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: var(--radius-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .fun-fact-back { transform: rotateY(180deg); }
+</style>
+
+<script>
+  function initFunFactCards() {
+    document.querySelectorAll('.fun-fact-card').forEach((card) => {
+      card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+      card.addEventListener('keydown', (e) => {
+        const key = (e as KeyboardEvent).key;
+        if (key === 'Enter' || key === ' ') {
+          e.preventDefault();
+          card.classList.toggle('is-flipped');
+        }
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', initFunFactCards);
+</script>

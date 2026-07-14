@@ -1,0 +1,65 @@
+---
+export const prerender = true;
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import Layout from '~/layouts/PageLayout.astro';
+import { getAllPosts, formatDate } from '~/utils/blog';
+import InlineCTA from '~/components/blog/InlineCTA.astro';
+
+export const getStaticPaths = (async () => {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout
+  metadata={{
+    title: post.data.title,
+    description: post.data.excerpt,
+  }}
+>
+  <article class="py-20 md:py-28">
+    <div class="container-page">
+      <div class="max-w-2xl mx-auto">
+
+        <!-- Header -->
+        <header class="mb-12 text-center">
+          {post.data.tags && post.data.tags.length > 0 && (
+            <p class="eyebrow text-primary mb-6">{post.data.tags.join(' · ')}</p>
+          )}
+          <h1 class="text-4xl md:text-6xl leading-[1.05]">{post.data.title}</h1>
+          {post.data.excerpt && (
+            <p class="mt-7 text-xl text-text-muted leading-relaxed">{post.data.excerpt}</p>
+          )}
+          <time class="mt-8 block eyebrow text-text-muted" datetime={post.data.publishDate.toISOString()}>
+            {formatDate(post.data.publishDate)}
+          </time>
+        </header>
+
+        <div class="border-t border-border pt-12" />
+
+        <!-- Body -->
+        <div class="prose prose-lg max-w-none prose-headings:font-heading prose-headings:font-medium prose-headings:tracking-tight prose-headings:text-text-heading prose-a:text-text-heading prose-a:decoration-border-strong hover:prose-a:decoration-text-heading prose-img:rounded-none">
+          <Content components={{ LeadMagnetCTA: InlineCTA }} />
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-14 pt-8 border-t border-border">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-2 eyebrow text-text-heading border-b border-text-heading/30 pb-1 hover:border-text-heading transition-colors duration-150"
+          >
+            ← Back to the journal
+          </a>
+        </footer>
+
+      </div>
+    </div>
+  </article>
+</Layout>

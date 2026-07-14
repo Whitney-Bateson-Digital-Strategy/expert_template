@@ -1,0 +1,38 @@
+---
+export interface Props {
+  ctaHref?: string;
+  ctaLabel?: string;
+}
+
+const {
+  ctaHref = '#',
+  ctaLabel = 'Download the guide',
+} = Astro.props;
+---
+
+<section id="lead-magnet" class="bg-bg-subtle border-t border-border" data-section-bg="subtle">
+  <div class="container-page py-14 md:py-16">
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-12 items-center">
+
+      <div class="max-w-2xl">
+        <p class="eyebrow text-primary mb-3">Free resource</p>
+        <h2 class="text-3xl md:text-4xl leading-tight">
+          A practical field guide to getting started — <em>free.</em>
+        </h2>
+        <p class="mt-3 text-text-muted max-w-lg">
+          The essentials, distilled. Enter your email and we'll send it straight over.
+        </p>
+      </div>
+
+      <div class="flex-shrink-0">
+        <a
+          href={ctaHref}
+          class="eyebrow inline-flex items-center justify-center gap-2 px-8 py-4 rounded-[var(--radius-button)] bg-accent text-white hover:bg-primary-dark transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-text-heading"
+        >
+          {ctaLabel}
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>

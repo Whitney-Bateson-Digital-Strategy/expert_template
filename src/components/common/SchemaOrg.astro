@@ -1,0 +1,83 @@
+---
+/**
+ * SchemaOrg.astro — Site-wide structured data (JSON-LD)
+ *
+ * Included once in Layout.astro <head>. Adds:
+ *   - WebSite (enables sitelinks search box eligibility)
+ *   - ProfessionalService (local SEO, maps, entity)
+ *   - Person (entity disambiguation for the practitioner)
+ *
+ * Page-level schemas (FAQPage, Service) live in their own components.
+ * UPDATE ALL BRACKETED FIELDS BELOW FOR EACH CLIENT.
+ */
+
+import { SITE } from 'astrowind:config';
+
+const siteUrl = SITE?.site ?? 'https://example.com';
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: '[BRAND NAME]',             // e.g. 'Meridian'
+  url: siteUrl,
+  description: '[Site description]',
+};
+
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${siteUrl}/#business`,
+  name: '[BRAND NAME]',
+  description: '[Practice description]',
+  url: siteUrl,
+  telephone: '',                    // e.g. '+10000000000' — remove field if not used
+  email: '[CONTACT EMAIL]',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: '[CITY]',
+    addressRegion: '[STATE/REGION]',
+    addressCountry: '[COUNTRY]',
+  },
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: '[AREA 1]' },
+    { '@type': 'AdministrativeArea', name: '[AREA 2]' },
+  ],
+  priceRange: '$$',                 // '$' | '$$' | '$$$'
+  sameAs: [
+    // 'https://instagram.com/[handle]',
+    // 'https://linkedin.com/in/[handle]',
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: '[SERVICE CATEGORY NAME]',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '[SERVICE 1 NAME]', description: '[SERVICE 1 DESCRIPTION]' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '[SERVICE 2 NAME]', description: '[SERVICE 2 DESCRIPTION]' } },
+    ],
+  },
+};
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${siteUrl}/#person`,
+  name: '[PRACTITIONER FULL NAME]',
+  jobTitle: '[JOB TITLE]',
+  honorificSuffix: '[CREDENTIAL]',
+  worksFor: { '@id': `${siteUrl}/#business` },
+  url: `${siteUrl}/about`,
+  sameAs: [
+    // 'https://instagram.com/[handle]',
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: '[CITY]',
+    addressRegion: '[STATE/REGION]',
+    addressCountry: '[COUNTRY]',
+  },
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />

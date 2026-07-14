@@ -1,0 +1,73 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface ExploreCard {
+  image: { src: string; alt: string };
+  label: string;
+  heading: string;
+  description: string;
+  href: string;
+  ctaLabel?: string;
+}
+
+export interface Props {
+  eyebrow?: string;
+  heading?: string;
+  cards: ExploreCard[];
+  background?: 'base' | 'subtle' | 'accent-light' | 'accent2-light';
+}
+
+const {
+  eyebrow = 'Keep exploring',
+  heading = "There's more to discover.",
+  cards,
+  background = 'subtle',
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base: 'bg-bg-base',
+  subtle: 'bg-bg-subtle',
+  'accent-light': 'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+};
+---
+
+<SectionWrapper class={bgMap[background]} bg={background}>
+
+  <div class="mb-12 md:mb-16">
+    {eyebrow && (
+      <div class="flex items-center gap-4 mb-6">
+        <span class="h-px w-8 bg-border-strong" aria-hidden="true"></span>
+        <p class="eyebrow text-primary">{eyebrow}</p>
+      </div>
+    )}
+    <h2 class="text-4xl md:text-5xl leading-[1.05] max-w-[18ch]">{heading}</h2>
+  </div>
+
+  <div class={`grid grid-cols-1 gap-x-10 gap-y-12 ${cards.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
+    {cards.map((card) => (
+      <a href={card.href} class="group flex flex-col" aria-label={card.ctaLabel ?? `Explore: ${card.heading}`}>
+        <div class="overflow-hidden mb-6 aspect-[16/10]">
+          <img
+            src={card.image.src}
+            alt={card.image.alt}
+            class="w-full h-full object-cover grayscale-[20%] transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="border-t border-border pt-5">
+          <p class="eyebrow text-primary mb-3">{card.label}</p>
+          <h3 class="text-2xl leading-snug mb-3">{card.heading}</h3>
+          <p class="text-text-muted leading-relaxed mb-5">{card.description}</p>
+          <span class="inline-flex items-center gap-2 eyebrow text-text-heading border-b border-text-heading/30 pb-1 group-hover:border-text-heading transition-colors duration-200">
+            {card.ctaLabel ?? 'Explore'}
+            <Icon name="tabler:arrow-right" class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+</SectionWrapper>

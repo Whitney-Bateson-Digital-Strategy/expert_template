@@ -1,0 +1,89 @@
+---
+import Button from '~/components/ui/Button.astro';
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface Step {
+  title: string;
+  description: string;
+}
+
+export interface Props {
+  eyebrow?: string;
+  heading: string;
+  intro?: string;
+  steps: Step[];
+  cta?: { text: string; href: string };
+  background?: 'base' | 'subtle' | 'accent-light' | 'accent2-light' | 'primary' | 'accent' | 'accent2';
+  spacing?: 'default' | 'tight' | 'loose';
+}
+
+const { eyebrow, heading, intro, steps, cta, background = 'base', spacing = 'default' } = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base: 'bg-bg-base',
+  subtle: 'bg-bg-subtle',
+  'accent-light': 'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+  primary: 'bg-primary',
+  accent: 'bg-accent',
+  accent2: 'bg-accent2',
+};
+
+const isDark = background === 'primary' || background === 'accent' || background === 'accent2';
+const headingText = isDark ? 'text-white' : '';
+const mutedText = isDark ? 'text-white/70' : 'text-text-muted';
+const eyebrowColor = isDark ? 'text-white/60' : 'text-primary';
+const indexColor = isDark ? 'text-white/30' : 'text-border-strong';
+const ruleColor = isDark ? 'border-white/20' : 'border-border';
+---
+
+<SectionWrapper class={bgMap[background]} bg={background} spacing={spacing}>
+
+  <!-- Header -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-14 md:mb-20">
+    <div class="lg:col-span-8">
+      {eyebrow && (
+        <div class="flex items-center gap-4 mb-6">
+          <span class={`h-px w-8 ${isDark ? 'bg-white/40' : 'bg-border-strong'}`} aria-hidden="true"></span>
+          <p class={`eyebrow ${eyebrowColor}`}>{eyebrow}</p>
+        </div>
+      )}
+      <h2 class={`text-4xl md:text-6xl leading-[1.03] ${headingText}`} set:html={heading} />
+    </div>
+    {intro && (
+      <div class="lg:col-span-4">
+        <p class={`leading-relaxed ${mutedText}`}>{intro}</p>
+      </div>
+    )}
+  </div>
+
+  <!-- Steps — oversized index / title / description rows -->
+  <div class={`border-t ${ruleColor}`}>
+    {steps.map((step, i) => (
+      <div
+        class={`grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-10 md:py-12 border-b ${ruleColor} items-baseline`}
+        data-reveal
+        data-reveal-delay={i * 90}
+      >
+        <div class="md:col-span-2">
+          <span class={`font-heading text-5xl md:text-6xl leading-none ${indexColor}`}>
+            {String(i + 1).padStart(2, '0')}
+          </span>
+        </div>
+        <div class="md:col-span-4">
+          <h3 class={`text-2xl md:text-3xl ${headingText}`}>{step.title}</h3>
+        </div>
+        <div class="md:col-span-6">
+          <p class={`leading-relaxed ${mutedText}`}>{step.description}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {cta && (
+    <div class="mt-14">
+      <Button href={cta.href} variant={isDark ? 'outline' : 'primary'}>{cta.text}</Button>
+    </div>
+  )}
+
+</SectionWrapper>

@@ -1,0 +1,86 @@
+---
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface Props {
+  eyebrow?: string;
+  heading: string;
+  intro?: string;
+  items: FAQItem[];
+  background?: 'base' | 'subtle' | 'accent2-light';
+}
+
+const { eyebrow, heading, intro, items, background = 'base' } = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base: 'bg-bg-base',
+  subtle: 'bg-bg-subtle',
+  'accent2-light': 'bg-accent2-light',
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+};
+---
+
+<SectionWrapper class={bgMap[background]} bg={background}>
+
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.6fr] gap-12 lg:gap-20 items-start">
+
+    <!-- Heading rail -->
+    <div class="lg:sticky lg:top-32">
+      {eyebrow && (
+        <div class="flex items-center gap-4 mb-6">
+          <span class="h-px w-8 bg-border-strong" aria-hidden="true"></span>
+          <p class="eyebrow text-primary">{eyebrow}</p>
+        </div>
+      )}
+      <h2 class="text-4xl md:text-5xl leading-[1.05]">{heading}</h2>
+      {intro && <p class="mt-6 text-text-muted leading-relaxed">{intro}</p>}
+    </div>
+
+    <!-- Accordion -->
+    <div class="border-t border-border">
+      {items.map((item) => (
+        <details class="faq-item group border-b border-border" name="faq">
+          <summary class="flex items-start justify-between gap-6 cursor-pointer list-none select-none py-6">
+            <span class="font-heading text-xl md:text-2xl leading-snug text-text-heading pr-2">{item.question}</span>
+            <span class="flex-shrink-0 mt-1.5 w-6 h-6 flex items-center justify-center" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-text-muted transition-transform duration-300 group-open:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14" />
+              </svg>
+            </span>
+          </summary>
+          <div class="faq-body overflow-hidden">
+            <p class="text-text-muted leading-relaxed pb-6 max-w-2xl">{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+
+  </div>
+
+</SectionWrapper>
+
+<style>
+  .faq-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+  details[open] .faq-body { grid-template-rows: 1fr; }
+  .faq-body > * { overflow: hidden; }
+  summary::-webkit-details-marker { display: none; }
+</style>

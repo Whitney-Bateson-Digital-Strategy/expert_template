@@ -1,0 +1,79 @@
+---
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface Testimonial {
+  quote: string;
+  name: string;
+  detail?: string;
+  photo?: { src: string; alt: string };
+}
+
+export interface Props {
+  eyebrow?: string;
+  heading?: string;
+  testimonials: Testimonial[];
+  background?: 'base' | 'subtle' | 'accent-light' | 'accent2-light' | 'primary' | 'accent' | 'accent2';
+}
+
+const { eyebrow, heading, testimonials, background = 'subtle' } = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base: 'bg-bg-base',
+  subtle: 'bg-bg-subtle',
+  'accent-light': 'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+  primary: 'bg-primary',
+  accent: 'bg-accent',
+  accent2: 'bg-accent2',
+};
+
+const isDark = background === 'primary' || background === 'accent' || background === 'accent2';
+const headingText = isDark ? 'text-white' : '';
+const eyebrowColor = isDark ? 'text-white/60' : 'text-primary';
+const ruleColor = isDark ? 'border-white/25' : 'border-border-strong';
+const quoteText = isDark ? 'text-white/90' : 'text-text-heading';
+const nameText = isDark ? 'text-white' : 'text-text-heading';
+const detailText = isDark ? 'text-white/60' : 'text-text-muted';
+---
+
+<SectionWrapper class={bgMap[background]} bg={background}>
+
+  {(eyebrow || heading) && (
+    <div class="mb-14 md:mb-20">
+      {eyebrow && (
+        <div class="flex items-center gap-4 mb-6">
+          <span class={`h-px w-8 ${isDark ? 'bg-white/40' : 'bg-border-strong'}`} aria-hidden="true"></span>
+          <p class={`eyebrow ${eyebrowColor}`}>{eyebrow}</p>
+        </div>
+      )}
+      {heading && <h2 class={`text-4xl md:text-6xl leading-[1.03] ${headingText}`}>{heading}</h2>}
+    </div>
+  )}
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-12">
+    {testimonials.map((t) => (
+      <figure class={`flex flex-col border-t ${ruleColor} pt-6`}>
+        <span class={`font-heading text-5xl leading-[0.6] mb-6 select-none ${isDark ? 'text-white/40' : 'text-border-strong'}`} aria-hidden="true">&ldquo;</span>
+        <blockquote class={`font-heading text-xl md:text-2xl leading-[1.35] flex-1 ${quoteText}`}>
+          {t.quote}
+        </blockquote>
+        <figcaption class="mt-8 flex items-center gap-3">
+          {t.photo && (
+            <img
+              src={t.photo.src}
+              alt={t.photo.alt}
+              class="w-11 h-11 object-cover object-top grayscale flex-shrink-0"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+          <div>
+            <p class={`eyebrow ${nameText}`}>{t.name}</p>
+            {t.detail && <p class={`text-sm mt-1 ${detailText}`}>{t.detail}</p>}
+          </div>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+
+</SectionWrapper>

@@ -1,0 +1,24 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Button from '~/components/ui/Button.astro';
+import { getHomePermalink } from '~/utils/permalinks';
+
+const title = 'Page not found';
+---
+
+<Layout metadata={{ title }} showLeadMagnet={false}>
+  <section class="flex items-center min-h-[72vh]">
+    <div class="container-page py-20">
+      <div class="max-w-xl mx-auto text-center">
+        <p class="font-heading text-[7rem] md:text-[10rem] leading-none text-border-strong">404</p>
+        <h1 class="mt-2 text-4xl md:text-5xl leading-[1.05]">This page wandered <em>off.</em></h1>
+        <p class="mt-6 text-text-muted text-lg leading-relaxed">
+          The page you're looking for doesn't exist — but there's plenty more to explore back home.
+        </p>
+        <div class="mt-10 flex justify-center">
+          <Button href={getHomePermalink()} variant="primary">Back to home</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

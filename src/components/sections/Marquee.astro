@@ -1,0 +1,44 @@
+---
+export interface Props {
+  items: string[];
+  speed?: 'xslow' | 'slow' | 'normal' | 'fast';
+  background?: 'primary' | 'secondary' | 'accent' | 'accent2' | 'subtle';
+}
+
+const { items, speed = 'normal', background = 'accent' } = Astro.props;
+
+const durations = { xslow: '80s', slow: '55s', normal: '35s', fast: '20s' };
+const duration = durations[speed];
+
+const bgClasses: Record<string, string> = {
+  primary: 'bg-primary text-white',
+  secondary: 'bg-secondary text-text-heading',
+  accent: 'bg-accent text-white',
+  accent2: 'bg-accent2 text-white',
+  subtle: 'bg-bg-subtle text-text-heading',
+};
+---
+
+<div class={`overflow-hidden py-5 ${bgClasses[background]}`} data-section-bg={background} aria-hidden="true">
+  <div class="marquee-track flex items-center whitespace-nowrap w-max" style={`--duration: ${duration}`}>
+    {[...items, ...items].map((item) => (
+      <span class="inline-flex items-center gap-6 px-6 font-heading text-2xl md:text-3xl italic">
+        {item}
+        <span class="not-italic text-lg opacity-30">—</span>
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee-track {
+    animation: marquee var(--duration) linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+</style>

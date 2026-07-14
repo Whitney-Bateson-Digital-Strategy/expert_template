@@ -1,0 +1,23 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Button from '~/components/ui/Button.astro';
+
+const title = 'Message received';
+---
+
+<Layout metadata={{ title }} showLeadMagnet={false}>
+  <section class="flex items-center min-h-[72vh]">
+    <div class="container-page py-20">
+      <div class="max-w-xl mx-auto text-center">
+        <p class="eyebrow text-primary mb-6">Thank you</p>
+        <h1 class="text-5xl md:text-7xl leading-[1.03]">Your message is <em>on its way.</em></h1>
+        <p class="mt-7 text-text-muted text-lg leading-relaxed">
+          Thanks for reaching out. You'll hear back within one to two business days.
+        </p>
+        <div class="mt-10 flex justify-center">
+          <Button href="/" variant="primary">Back to home</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

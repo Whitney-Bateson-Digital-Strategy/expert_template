@@ -1,0 +1,74 @@
+---
+export interface Props {
+  lastUpdated?: string;
+}
+
+const { lastUpdated } = Astro.props;
+---
+
+<section class="bg-bg-base" data-section-bg="base">
+  <div class="container-page py-20 md:py-28">
+    <div class="max-w-3xl prose-legal">
+      {lastUpdated && (
+        <p class="eyebrow text-text-muted mb-10">Last updated: {lastUpdated}</p>
+      )}
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .prose-legal :global(h2) {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--color-text-heading);
+    margin-top: 2.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-legal :global(h3) {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--color-text-heading);
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose-legal :global(p) {
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  .prose-legal :global(ul) {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 1rem;
+  }
+  .prose-legal :global(li) {
+    position: relative;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin-bottom: 0.35rem;
+    padding-left: 1.5rem;
+  }
+  .prose-legal :global(li)::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+  }
+  .prose-legal :global(a) {
+    color: var(--color-text-heading);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--color-border-strong);
+  }
+  .prose-legal :global(a:hover) {
+    text-decoration-color: var(--color-text-heading);
+  }
+  .prose-legal :global(strong) {
+    color: var(--color-text-heading);
+    font-weight: 600;
+  }
+</style>

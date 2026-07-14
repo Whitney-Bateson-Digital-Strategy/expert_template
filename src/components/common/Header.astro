@@ -1,0 +1,184 @@
+---
+import { Icon } from 'astro-icon/components';
+import Logo from '~/components/Logo.astro';
+import { trimSlash } from '~/utils/permalinks';
+
+export interface NavLink {
+  text: string;
+  href?: string;
+  links?: NavLink[];
+}
+
+export interface Props {
+  links?: NavLink[];
+  actions?: { text: string; href: string; variant?: string }[];
+}
+
+const { links = [], actions = [] } = Astro.props;
+
+const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
+---
+
+<header
+  id="site-header"
+  class="sticky top-0 z-50 bg-bg-base/90 backdrop-blur-sm border-b border-border transition-all duration-300"
+>
+  <div class="container-nav flex items-center justify-between h-20 md:h-24 transition-all duration-300">
+
+    <a href="/" class="flex-shrink-0" aria-label="Home">
+      <Logo />
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-9" aria-label="Main navigation">
+      {links.map((link) =>
+        link.links?.length ? (
+          <div class="group relative">
+            <button
+              class="flex items-center gap-1 eyebrow text-text-base hover:text-text-heading transition-colors duration-200 py-2 cursor-pointer"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              {link.text}
+              <Icon name="tabler:chevron-down" class="w-3.5 h-3.5" aria-hidden="true" />
+            </button>
+            <div class="absolute top-full left-0 min-w-52 bg-bg-card border border-border py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200">
+              {link.links.map((sub) => (
+                <a
+                  href={sub.href}
+                  class="block px-5 py-2.5 text-sm text-text-base hover:text-text-heading hover:bg-bg-subtle transition-colors duration-150"
+                >
+                  {sub.text}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a
+            href={link.href}
+            class={`eyebrow transition-colors duration-200 ${link.href && currentPath === `/${trimSlash(link.href)}` ? 'text-text-heading' : 'text-text-base hover:text-text-heading'}`}
+          >
+            {link.text}
+          </a>
+        )
+      )}
+    </nav>
+
+    <div class="flex items-center gap-5">
+      {actions.length > 0 && (
+        <div class="hidden lg:flex items-center gap-3">
+          {actions.map((action) => (
+            <a
+              href={action.href}
+              class="eyebrow inline-flex items-center gap-2 border border-text-heading text-text-heading px-6 py-3 rounded-[var(--radius-button)] hover:bg-text-heading hover:text-white transition-colors duration-200"
+            >
+              {action.text}
+            </a>
+          ))}
+        </div>
+      )}
+
+      <button
+        id="menu-toggle"
+        class="lg:hidden flex flex-col justify-center items-center w-11 h-11 gap-1.5 text-text-heading transition-colors"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="block w-6 h-px bg-current transition-all duration-200" id="menu-bar-1"></span>
+        <span class="block w-6 h-px bg-current transition-all duration-200" id="menu-bar-2"></span>
+        <span class="block w-6 h-px bg-current transition-all duration-200" id="menu-bar-3"></span>
+      </button>
+    </div>
+
+  </div>
+
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden border-t border-border bg-bg-base"
+  >
+    <nav class="container-nav py-6 flex flex-col gap-1" aria-label="Mobile navigation">
+      {links.map((link) =>
+        link.links?.length ? (
+          <>
+            <p class="px-3 pt-3 pb-1 eyebrow text-text-muted">{link.text}</p>
+            {link.links.map((sub) => (
+              <a
+                href={sub.href}
+                class="block pl-6 pr-3 py-2.5 text-text-base hover:text-text-heading hover:bg-bg-subtle transition-colors duration-150"
+              >
+                {sub.text}
+              </a>
+            ))}
+          </>
+        ) : (
+          <a
+            href={link.href}
+            class={`block px-3 py-3 eyebrow transition-colors duration-150 hover:bg-bg-subtle ${link.href && currentPath === `/${trimSlash(link.href)}` ? 'text-text-heading' : 'text-text-base hover:text-text-heading'}`}
+          >
+            {link.text}
+          </a>
+        )
+      )}
+      {actions.length > 0 && (
+        <div class="pt-4 mt-3 border-t border-border flex flex-col gap-3">
+          {actions.map((action) => (
+            <a
+              href={action.href}
+              class="eyebrow inline-flex items-center justify-center gap-2 border border-text-heading text-text-heading px-6 py-4 rounded-[var(--radius-button)] hover:bg-text-heading hover:text-white transition-colors duration-200"
+            >
+              {action.text}
+            </a>
+          ))}
+        </div>
+      )}
+    </nav>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    const header = document.getElementById('site-header');
+    const inner = header?.querySelector('.container-nav') as HTMLElement | null;
+
+    const prev = (window as any).__headerScrollHandler;
+    if (prev) window.removeEventListener('scroll', prev);
+
+    function onScroll() {
+      const scrolled = window.scrollY > 32;
+      if (inner) {
+        inner.classList.toggle('md:h-24', !scrolled);
+        inner.classList.toggle('md:h-20', scrolled);
+      }
+      header?.classList.toggle('shadow-[0_1px_0_rgba(0,0,0,0.04)]', scrolled);
+    }
+
+    (window as any).__headerScrollHandler = onScroll;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const bar1 = document.getElementById('menu-bar-1');
+    const bar2 = document.getElementById('menu-bar-2');
+    const bar3 = document.getElementById('menu-bar-3');
+
+    toggle?.addEventListener('click', () => {
+      const isOpen = !menu?.classList.contains('hidden');
+      if (isOpen) {
+        menu?.classList.add('hidden');
+        toggle.setAttribute('aria-expanded', 'false');
+        bar1?.classList.remove('translate-y-2', 'rotate-45');
+        bar2?.classList.remove('opacity-0');
+        bar3?.classList.remove('-translate-y-2', '-rotate-45');
+      } else {
+        menu?.classList.remove('hidden');
+        toggle.setAttribute('aria-expanded', 'true');
+        bar1?.classList.add('translate-y-2', 'rotate-45');
+        bar2?.classList.add('opacity-0');
+        bar3?.classList.add('-translate-y-2', '-rotate-45');
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initHeader);
+</script>

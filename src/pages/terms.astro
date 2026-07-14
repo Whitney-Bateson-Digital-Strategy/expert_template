@@ -1,0 +1,44 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import PageHero from '~/components/sections/PageHero.astro';
+import LegalContent from '~/components/sections/LegalContent.astro';
+
+const metadata = {
+  title: 'Terms of Service',
+  description: 'Terms of Service for Meridian.',
+  robots: { index: false, follow: true },
+};
+---
+
+<Layout metadata={metadata} showLeadMagnet={false}>
+
+  <PageHero variant="centered" background="subtle" heading="Terms of Service" />
+
+  <LegalContent lastUpdated="[Month Year]">
+
+    <p><strong>PLACEHOLDER — Replace this entire section with your actual Terms of Service before going live.</strong> An attorney or terms generator can produce terms appropriate for your practice type and jurisdiction.</p>
+
+    <h2>Acceptance of Terms</h2>
+    <p>By accessing and using this website, you accept and agree to be bound by these Terms of Service. If you do not agree, please do not use this website.</p>
+
+    <h2>Use of the Website</h2>
+    <p>The content on this website is provided for informational purposes only. It is not a substitute for professional advice tailored to your specific situation. Always seek the guidance of a qualified professional with any questions you may have.</p>
+
+    <h2>Professional Services</h2>
+    <p>Services are provided pursuant to a formal client agreement. Nothing on this website constitutes the establishment of a professional relationship. A formal intake process is required before any services begin.</p>
+
+    <h2>Intellectual Property</h2>
+    <p>All content on this website — including text, graphics, logos, and images — is the property of Meridian and is protected by applicable copyright laws. You may not reproduce, distribute, or create derivative works without written permission.</p>
+
+    <h2>Limitation of Liability</h2>
+    <p>To the fullest extent permitted by law, Meridian shall not be liable for any indirect, incidental, special, or consequential damages arising out of your use of this website or its content.</p>
+
+    <h2>Changes to Terms</h2>
+    <p>We reserve the right to update these terms at any time. Changes will be posted on this page with an updated date. Continued use after changes constitutes acceptance of the revised terms.</p>
+
+    <h2>Contact Us</h2>
+    <p>If you have questions about these Terms of Service, please contact us at <a href="mailto:hello@example.com">hello@example.com</a>.</p>
+
+  </LegalContent>
+
+</Layout>

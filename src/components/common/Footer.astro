@@ -1,0 +1,103 @@
+---
+import { Icon } from 'astro-icon/components';
+import { SITE } from 'astrowind:config';
+
+export interface FooterLink {
+  text: string;
+  href: string;
+}
+
+export interface FooterLinkGroup {
+  title: string;
+  links: FooterLink[];
+}
+
+export interface SocialLink {
+  ariaLabel: string;
+  icon: string;
+  href: string;
+}
+
+export interface Props {
+  links?: FooterLinkGroup[];
+  secondaryLinks?: FooterLink[];
+  socialLinks?: SocialLink[];
+  footNote?: string;
+}
+
+const { links = [], secondaryLinks = [], socialLinks = [], footNote = '' } = Astro.props;
+---
+
+<footer class="bg-accent text-white/70" data-section-bg="accent">
+  <div class="container-page pt-20 pb-10 md:pt-28 md:pb-12">
+
+    <!-- Top: oversized wordmark + link columns -->
+    <div class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr] gap-12 md:gap-16 pb-16 border-b border-white/15">
+
+      <div>
+        <a href="/" aria-label="Home" class="inline-block text-white">
+          <span class="font-heading text-4xl md:text-5xl font-medium tracking-tight">
+            {SITE?.name}
+          </span>
+        </a>
+        <p class="mt-6 max-w-xs leading-relaxed text-white/60">
+          A considered practice for people who want to do the work — and do it well.
+        </p>
+      </div>
+
+      {links.map((group) => (
+        <div>
+          <p class="eyebrow text-white/40 mb-5">{group.title}</p>
+          <ul class="flex flex-col gap-3">
+            {group.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-white/70 hover:text-white transition-colors duration-150"
+                >
+                  {link.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom: legal + social -->
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-5">
+      <div class="flex items-center gap-1 flex-wrap justify-center sm:justify-start text-sm text-white/50">
+        {footNote && <span set:html={footNote} />}
+        {secondaryLinks.length > 0 && (
+          <>
+            <span class="mx-1 hidden sm:inline">·</span>
+            {secondaryLinks.map((link, i) => (
+              <>
+                {i > 0 && <span class="mx-1">·</span>}
+                <a href={link.href} class="hover:text-white transition-colors duration-150">
+                  {link.text}
+                </a>
+              </>
+            ))}
+          </>
+        )}
+      </div>
+
+      {socialLinks.length > 0 && (
+        <div class="flex items-center gap-4">
+          {socialLinks.map((social) => (
+            <a
+              href={social.href}
+              aria-label={social.ariaLabel}
+              class="text-white/50 hover:text-white transition-colors duration-150"
+              {...(social.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            >
+              <Icon name={social.icon} class="w-5 h-5" aria-hidden="true" />
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+
+  </div>
+</footer>

@@ -1,0 +1,78 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface Props {
+  eyebrow?: string;
+  heading: string;
+  subheading?: string;
+  primaryCta: { text: string; href: string };
+  secondaryCta?: { text: string; href: string };
+  icon?: string;
+  background?: 'primary' | 'accent' | 'accent2' | 'base' | 'subtle';
+}
+
+const {
+  eyebrow,
+  heading,
+  subheading,
+  primaryCta,
+  secondaryCta,
+  icon,
+  background = 'primary',
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  primary: 'bg-primary',
+  accent: 'bg-accent',
+  accent2: 'bg-accent2',
+  base: 'bg-bg-base',
+  subtle: 'bg-bg-subtle',
+};
+
+const isDark = background === 'primary' || background === 'accent' || background === 'accent2';
+const headingText = isDark ? 'text-white' : '';
+const mutedText = isDark ? 'text-white/75' : 'text-text-muted';
+const eyebrowColor = isDark ? 'text-white/70' : 'text-primary';
+const ruleColor = isDark ? 'bg-white/40' : 'bg-border-strong';
+---
+
+<SectionWrapper class={bgMap[background]} bg={background} spacing="loose">
+  <div class="max-w-4xl">
+
+    {icon && (
+      <Icon name={icon} class={`w-9 h-9 mb-8 ${isDark ? 'text-white/40' : 'text-primary/40'}`} aria-hidden="true" />
+    )}
+
+    {eyebrow && (
+      <div class="flex items-center gap-4 mb-8" data-reveal>
+        <span class={`h-px w-10 ${ruleColor}`} aria-hidden="true"></span>
+        <p class={`eyebrow ${eyebrowColor}`}>{eyebrow}</p>
+      </div>
+    )}
+
+    <h2 class={`text-4xl md:text-[4rem] leading-[1.02] max-w-[18ch] ${headingText}`} data-reveal data-reveal-delay="80" set:html={heading} />
+
+    {subheading && (
+      <p class={`mt-8 max-w-xl text-lg leading-relaxed ${mutedText}`} data-reveal data-reveal-delay="160">
+        {subheading}
+      </p>
+    )}
+
+    <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4" data-reveal data-reveal-delay="240">
+      <Button href={primaryCta.href} variant={isDark ? 'outline' : 'primary'}>
+        {primaryCta.text}
+      </Button>
+      {secondaryCta && (
+        <a
+          href={secondaryCta.href}
+          class={`eyebrow inline-flex items-center gap-2 border-b pb-1 transition-colors duration-200 ${isDark ? 'text-white border-white/40 hover:border-white' : 'text-text-heading border-text-heading/30 hover:border-text-heading'}`}
+        >
+          {secondaryCta.text}
+        </a>
+      )}
+    </div>
+
+  </div>
+</SectionWrapper>

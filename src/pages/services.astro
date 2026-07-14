@@ -1,0 +1,244 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import PageHero from '~/components/sections/PageHero.astro';
+import ServicesDetail from '~/components/sections/ServicesDetail.astro';
+import IsThisYou from '~/components/sections/IsThisYou.astro';
+import Process from '~/components/sections/Process.astro';
+import Testimonials from '~/components/sections/Testimonials.astro';
+import FAQ from '~/components/sections/FAQ.astro';
+import CtaFinal from '~/components/sections/CtaFinal.astro';
+
+const metadata = {
+  title: 'Services',
+  description:
+    'Work with Meridian one-on-one, in a group cohort, or for a single focused intensive. Rigorous, flexible support built around your real life.',
+};
+---
+
+<Layout metadata={metadata}>
+
+  {/* 1. Hero */}
+  <PageHero
+    variant="panels"
+    hideImageOnMobile={true}
+    eyebrow="Work with me"
+    heading="Support that meets you <em>where you are</em>."
+    body={[
+      "Whether you're just starting to untangle things or you've been at it for years — there's a path that fits.",
+      'No rigid programs. No one-size-fits-all plans. Just support built around your actual life.',
+    ]}
+    cta={{ text: 'Book a Discovery Call', href: '/booking' }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=80',
+      alt: 'A calm consultation setting',
+      width: 900,
+    }}
+  />
+
+  {/* 2. Service rows */}
+  <ServicesDetail
+    background="base"
+    services={[
+      {
+        id: 'private',
+        label: 'One-on-one',
+        name: 'Private Consultation',
+        tagline: 'For the person who wants real answers — not another generic plan.',
+        description:
+          "This is where we do the deep work. Together we'll look at what's actually in your way — the habits, the history, the assumptions you didn't know you held — and build something that works for your real life. Sessions are held virtually or in person.",
+        isForYou: [
+          "You've tried structured approaches but nothing sticks",
+          'You want to stop second-guessing every decision',
+          'You\'re navigating something that needs tailored guidance',
+          'You want support that actually knows your context',
+        ],
+        includes: [
+          'Comprehensive initial assessment (75 min)',
+          'Regular follow-up sessions (45 min)',
+          'A personalized plan — flexible, not rigid',
+          'Between-session messaging support',
+          'Frameworks, tools, and resources throughout',
+        ],
+        cta: { text: 'Book a Discovery Call', href: '/booking' },
+        image: {
+          src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=900&q=80',
+          alt: 'A private one-on-one session',
+          width: 900,
+        },
+      },
+      {
+        id: 'cohort',
+        label: 'Group program',
+        name: 'The Cohort',
+        tagline: 'Everything you need to do the work — with a community around you.',
+        description:
+          "A ten-week live program for people ready to stop starting over. You'll get the same framework as private work, plus the momentum and accountability of doing it alongside others who get it.",
+        isForYou: [
+          'You do your best work in good company',
+          "You want expert guidance but one-on-one isn't the fit right now",
+          'You want structure with room to make it your own',
+          "You're ready to commit to ten weeks of real change",
+        ],
+        includes: [
+          'Weekly 90-minute live group sessions (10 weeks)',
+          'A private community space between sessions',
+          'Full curriculum: workbooks, guides, and tools',
+          'Two 1:1 check-ins during the program',
+          'Session recordings for the program duration',
+        ],
+        cta: { text: 'Join the Waitlist', href: '/contact' },
+        image: {
+          src: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=900&q=80',
+          alt: 'A small group program in session',
+          width: 900,
+        },
+      },
+      {
+        id: 'intensive',
+        label: 'Single session',
+        name: 'The Intensive',
+        tagline: 'One focused session to get clear, get answers, and leave with a plan.',
+        description:
+          'Not ready for ongoing work, or just need a reset? The Intensive is a single ninety-minute deep-dive where we tackle your most pressing questions, cut through the confusion, and leave you with concrete next steps — no follow-up commitment required.',
+        isForYou: [
+          'You have specific questions and want expert answers',
+          "You've done the work before and just need a tune-up",
+          'You want to try working together before committing',
+          'Your schedule makes ongoing sessions hard right now',
+        ],
+        includes: [
+          'A 90-minute one-on-one session',
+          'Pre-session intake and review',
+          'A personalized action plan within 48 hours',
+          'One follow-up for clarifying questions',
+          'The option to roll into ongoing work anytime',
+        ],
+        cta: { text: 'Book a Session', href: '/contact' },
+        image: {
+          src: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=80',
+          alt: 'A focused single working session',
+          width: 900,
+        },
+      },
+    ]}
+  />
+
+  {/* 3. Is this you? — dark section */}
+  <IsThisYou
+    eyebrow="Sound familiar?"
+    heading="You're in the <em>right place.</em>"
+    intro="If you've nodded along to any of these, we should talk."
+    items={[
+      "You know what you 'should' be doing — you just can't make it stick",
+      'You second-guess decisions you used to make easily',
+      "You've tried every method and keep ending up back at square one",
+      'You want to enjoy the work again without it feeling complicated',
+      "You're worn out from thinking about it so much",
+      'You want support that treats you like a whole person',
+    ]}
+    cta={{ text: 'Book a Discovery Call', href: '/booking' }}
+    background="accent"
+  />
+
+  {/* 4. Testimonials */}
+  <Testimonials
+    eyebrow="Client stories"
+    heading="What clients say."
+    background="base"
+    testimonials={[
+      {
+        quote:
+          'I came in thinking I needed another plan. What I got instead was an entirely different way of thinking about the work — and for the first time in years, it stuck.',
+        name: 'Sarah M.',
+        detail: 'Private client',
+      },
+      {
+        quote:
+          "They cut through the noise. The problem was never effort — it was that everything I'd tried was fighting how I actually live. We built something that works with my life, not against it.",
+        name: 'Jess T.',
+        detail: 'The Cohort',
+      },
+      {
+        quote:
+          "I was skeptical one session could do much, but I left the Intensive with more clarity than months of searching had given me. Worth every minute.",
+        name: 'Rachel K.',
+        detail: 'The Intensive',
+      },
+    ]}
+  />
+
+  {/* 5. Process */}
+  <Process
+    eyebrow="How it works"
+    heading="Getting started is simpler <em>than you think.</em>"
+    background="base"
+    spacing="tight"
+    steps={[
+      {
+        title: 'Book a discovery call',
+        description:
+          "A relaxed twenty-minute conversation to talk through what's been getting in the way and figure out which path makes the most sense. No pressure, no pitch.",
+      },
+      {
+        title: 'We build your plan together',
+        description:
+          'Your first session is a deep dive — your context, your goals, your constraints. From there we build something flexible and realistic, not a set of rules to white-knuckle.',
+      },
+      {
+        title: 'You start feeling different',
+        description:
+          'Clearer, steadier, more in control. The work compounds — small shifts that quietly become your new normal.',
+      },
+    ]}
+    cta={{ text: 'Book Your Call', href: '/booking' }}
+  />
+
+  {/* 6. FAQ */}
+  <FAQ
+    eyebrow="Questions"
+    heading="Frequently asked."
+    background="base"
+    items={[
+      {
+        question: 'How do I know which option is right for me?',
+        answer:
+          "That's exactly what the free discovery call is for. We'll talk through where you are, what you've tried, and what kind of support would actually work — and I'll give you an honest recommendation, even if it isn't one of my programs.",
+      },
+      {
+        question: 'Do we meet in person or online?',
+        answer:
+          'The practice is remote-first, so most work happens over video and location is rarely a barrier. In-person sessions are available by arrangement.',
+      },
+      {
+        question: 'Do I have to follow a rigid plan?',
+        answer:
+          "No — and that's the whole point. The approach is built around flexibility, not rules. We work with your preferences, your schedule, and your goals. You won't leave with a rigid plan you'll abandon in two weeks.",
+      },
+      {
+        question: 'What does it cost?',
+        answer:
+          'Investment depends on the path that fits. Full details are shared on the discovery call once we know which option makes sense for you — so you can make a clear decision without guesswork.',
+      },
+      {
+        question: 'How quickly will I see results?',
+        answer:
+          'Most clients notice meaningful shifts within the first few weeks. The deeper changes compound over time as new habits settle in and the framework becomes second nature.',
+      },
+      {
+        question: 'What if I\'m not sure I\'m ready?',
+        answer:
+          "That's common, and completely fine. The discovery call is low-pressure by design — it exists to help you decide, not to sell you. If the timing isn't right, I'll say so.",
+      },
+    ]}
+  />
+
+  {/* 7. Final CTA */}
+  <CtaFinal
+    eyebrow="Ready to begin?"
+    heading="Let's figure out your next step <em>together.</em>"
+    subheading="Book a free twenty-minute discovery call — no commitment, no pressure. Just a conversation about what's been getting in the way."
+    primaryCta={{ text: 'Book a Discovery Call', href: '/booking' }}
+    background="primary"
+  />
+
+</Layout>

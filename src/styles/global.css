@@ -1,0 +1,248 @@
+@import "tailwindcss";
+@import "@fontsource-variable/outfit";
+@import "@fontsource-variable/cormorant";
+@plugin "@tailwindcss/typography";
+
+/*
+  EXPERT template — editorial design system.
+  Same token architecture as the classic template (identical token names),
+  but the default values are a refined, neutral, grayscale-safe palette so the
+  layout reads premium before any brand color is chosen. To rebrand a client
+  site, change the values in @theme {} — every component updates automatically.
+*/
+
+@theme {
+  /* Colors — core palette (neutral by default, fully swappable).
+     Tuned to a warm cream + espresso editorial register. */
+  --color-primary: #6c6150;         /* warm taupe/stone — eyebrows, labels, icons, rules, one taupe CTA section */
+  --color-primary-dark: #4c4234;    /* darker taupe — secondary button border/text, link hovers */
+  --color-secondary: #e8e0d1;       /* pale stone — chips, badge + card backgrounds */
+  --color-accent: #33281d;          /* warm espresso — primary buttons, heading italic accents, dark feature blocks */
+  --color-accent-light: #ece3d3;    /* warm paper — soft section backgrounds, card backs */
+  --color-accent2: #7c6f57;         /* muted sand — occasional third accent */
+  --color-accent2-light: #efe6d6;   /* pale sand — panel backgrounds */
+
+  /* Surfaces */
+  --color-bg-base: #f7f2e8;         /* warm cream — default section background */
+  --color-bg-subtle: #efe7d9;       /* deeper cream — alternating sections */
+  --color-bg-card: #fffdf8;
+
+  /* Text */
+  --color-text-base: #35302a;       /* warm near-black body */
+  --color-text-heading: #241d16;    /* espresso ink headings */
+  --color-text-muted: #6f6857;      /* warm gray */
+
+  /* Borders */
+  --color-border: #dcd3c2;          /* warm hairline */
+  --color-border-strong: #c2b7a1;
+
+  /* Typography */
+  --font-heading: 'Cormorant Variable', Georgia, serif;
+  --font-body: 'Outfit Variable', ui-sans-serif, sans-serif;
+
+  /* Radius — flatter / sharper than the classic template (editorial) */
+  --radius-button: 0.125rem;
+  --radius-card: 0.125rem;
+  --radius-input: 0.125rem;
+
+  /* Spacing */
+  --spacing-section: 6rem;
+
+  /* Heading scale — large editorial display, applied in @layer base below */
+  --text-h1: 4.25rem;
+  --text-h2: 2.75rem;
+  --text-h3: 1.75rem;
+  --text-h4: 1.35rem;
+}
+
+@layer utilities {
+  /* Primary content container — generous editorial margins */
+  .container-page {
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 3rem;
+    }
+  }
+
+  /* Wide container — for magazine bleeds / oversized grids */
+  .container-wide {
+    max-width: 96rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-wide {
+      padding-inline: 3rem;
+    }
+  }
+
+  /* Narrow measure — long-form text columns */
+  .container-narrow {
+    max-width: 46rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-narrow {
+      padding-inline: 3rem;
+    }
+  }
+
+  /* Nav container — full viewport width, tighter padding */
+  .container-nav {
+    width: 100%;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-nav {
+      padding-inline: 3rem;
+    }
+  }
+
+  /* Editorial eyebrow — tracked, small-caps label used across sections */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  /* Display italic accent — used inside serif headings via <em> */
+  .display-italic {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Section vertical padding — generous editorial whitespace */
+  .section-py        { padding-block: 4.5rem; }
+  .section-py-tight  { padding-block: 2.5rem; }
+  .section-py-loose  { padding-block: 6rem; }
+
+  @media (min-width: 768px) {
+    .section-py        { padding-block: 7rem; }
+    .section-py-tight  { padding-block: 3.5rem; }
+    .section-py-loose  { padding-block: 10rem; }
+  }
+
+  /* Keyboard focus — visible ring on all interactive elements */
+  :focus-visible {
+    outline: 2px solid var(--color-text-heading);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Respect the user's motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    [data-story-card],
+    [data-service-row],
+    [data-cta-el],
+    [data-process-el],
+    [data-step],
+    [data-isthisyou-el],
+    [data-reveal],
+    [data-about-el] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  /* Auto-collapse top padding when two adjacent sections share a background */
+  [data-section-bg="base"]     + [data-section-bg="base"],
+  [data-section-bg="subtle"]   + [data-section-bg="subtle"],
+  [data-section-bg="accent-light"]  + [data-section-bg="accent-light"],
+  [data-section-bg="accent2-light"] + [data-section-bg="accent2-light"],
+  [data-section-bg="primary"]  + [data-section-bg="primary"],
+  [data-section-bg="accent"]   + [data-section-bg="accent"],
+  [data-section-bg="accent2"]  + [data-section-bg="accent2"],
+  [data-section-bg="secondary"] + [data-section-bg="secondary"] {
+    padding-top: 0;
+  }
+
+  /* Shared scroll-reveal primitive — gated behind `.js` so content is always
+     visible without JavaScript (progressive enhancement, no hidden content). */
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  html.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@layer base {
+  body {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-text-base);
+    background-color: var(--color-bg-base);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Mobile-first display scale — scales up at lg (1024px) to full editorial sizes */
+  h1 {
+    font-size: 2.75rem;      /* mobile */
+    font-family: var(--font-heading);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--color-text-heading);
+  }
+  h2 {
+    font-size: 2.1rem;       /* mobile */
+    font-family: var(--font-heading);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--color-text-heading);
+  }
+  h3 {
+    font-size: 1.5rem;       /* mobile */
+    font-family: var(--font-heading);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--color-text-heading);
+  }
+  h4 {
+    font-size: 1.25rem;      /* mobile */
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-text-heading);
+  }
+
+  /* Italic accent inside serif display headings — the editorial signature */
+  h1 em, h2 em, h3 em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Desktop: restore full editorial display sizes */
+  @media (min-width: 1024px) {
+    h1 { font-size: var(--text-h1); }
+    h2 { font-size: var(--text-h2); }
+    h3 { font-size: var(--text-h3); }
+    h4 { font-size: var(--text-h4); }
+  }
+}

@@ -1,0 +1,86 @@
+---
+import Button from '~/components/ui/Button.astro';
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface Props {
+  eyebrow?: string;
+  heading: string;
+  body: string[];
+  image: { src: string; alt: string; width?: number; height?: number };
+  cta: { text: string; href: string };
+  panelBackground?: 'primary' | 'accent' | 'accent2' | 'accent-light' | 'accent2-light' | 'subtle';
+  imagePosition?: 'left' | 'right';
+}
+
+const {
+  eyebrow,
+  heading,
+  body,
+  image,
+  cta,
+  panelBackground = 'accent2-light',
+  imagePosition = 'left',
+} = Astro.props;
+
+const panelBgMap: Record<string, string> = {
+  primary: 'bg-primary',
+  accent: 'bg-accent',
+  accent2: 'bg-accent2',
+  'accent-light': 'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+  subtle: 'bg-bg-subtle',
+};
+
+const isDark = panelBackground === 'primary' || panelBackground === 'accent' || panelBackground === 'accent2';
+const headingText = isDark ? 'text-white' : '';
+const bodyText = isDark ? 'text-white/80' : 'text-text-muted';
+const eyebrowColor = isDark ? 'text-white/60' : 'text-primary';
+const imgRight = imagePosition === 'right';
+---
+
+<SectionWrapper class="bg-bg-base" bg="base">
+
+  <div class="relative grid grid-cols-1 lg:grid-cols-12 items-center">
+
+    <!-- Image — overlaps the panel on desktop -->
+    <div class={`relative z-10 ${imgRight ? 'lg:col-start-7 lg:col-span-6' : 'lg:col-start-1 lg:col-span-6'}`}>
+      <img
+        src={image.src}
+        alt={image.alt}
+        class="w-full aspect-[4/5] object-cover object-center grayscale-[15%]"
+        width={image.width}
+        height={image.height}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <!-- Colored / paper panel -->
+    <div
+      class={`${panelBgMap[panelBackground]} ${imgRight ? 'lg:col-start-1 lg:col-span-7 lg:row-start-1 lg:pr-24' : 'lg:col-start-6 lg:col-span-7 lg:row-start-1 lg:pl-24'}`}
+    >
+      <div class="px-8 py-12 md:px-14 md:py-16 lg:py-24">
+        {eyebrow && (
+          <div class="flex items-center gap-4 mb-6">
+            <span class={`h-px w-8 ${isDark ? 'bg-white/40' : 'bg-border-strong'}`} aria-hidden="true"></span>
+            <p class={`eyebrow ${eyebrowColor}`}>{eyebrow}</p>
+          </div>
+        )}
+
+        <h2 class={`text-4xl md:text-5xl leading-[1.05] ${headingText}`} set:html={heading} />
+
+        <div class="mt-7 flex flex-col gap-4 max-w-lg">
+          {body.map((paragraph) => (
+            <p class={`leading-relaxed ${bodyText}`}>{paragraph}</p>
+          ))}
+        </div>
+
+        <div class="mt-9">
+          <Button href={cta.href} variant={isDark ? 'outline' : 'primary'}>{cta.text}</Button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</SectionWrapper>

@@ -1,0 +1,88 @@
+---
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+import Button from '~/components/ui/Button.astro';
+
+export interface Props {
+  /**
+   * Heading text. Supports inline HTML — use <em>, <span>, etc. directly.
+   * Example: heading="Does any of this sound <em>familiar?</em>"
+   */
+  heading: string;
+  intro?: string;
+  struggles: string[];
+  closing?: string;
+  cta?: { text: string; href: string };
+  image?: { src: string; alt: string; width?: number; height?: number };
+  background?: 'subtle' | 'base' | 'accent-light' | 'accent2-light' | 'primary' | 'accent' | 'accent2';
+}
+
+const { heading, intro, struggles, closing, cta, image, background = 'subtle' } = Astro.props;
+
+const bgMap: Record<string, string> = {
+  subtle: 'bg-bg-subtle',
+  base: 'bg-bg-base',
+  'accent-light': 'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+  primary: 'bg-primary',
+  accent: 'bg-accent',
+  accent2: 'bg-accent2',
+};
+
+const isDark = background === 'primary' || background === 'accent' || background === 'accent2';
+const headingText = isDark ? 'text-white' : '';
+const mutedText = isDark ? 'text-white/70' : 'text-text-muted';
+const ruleColor = isDark ? 'border-white/20' : 'border-border';
+const indexColor = isDark ? 'text-white/40' : 'text-primary';
+const itemText = isDark ? 'text-white/90' : 'text-text-base';
+---
+
+<SectionWrapper class={bgMap[background]} bg={background}>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+
+    <!-- Left rail — heading, intro, (optional) image, cta -->
+    <div class="lg:col-span-5 lg:sticky lg:top-32">
+      <h2 class={`text-4xl md:text-5xl leading-[1.05] ${headingText}`} set:html={heading} />
+      {intro && (
+        <p class={`mt-6 leading-relaxed ${mutedText}`}>{intro}</p>
+      )}
+
+      {image && (
+        <img
+          src={image.src}
+          alt={image.alt}
+          class="mt-10 w-full aspect-[4/3] object-cover grayscale-[15%]"
+          width={image.width}
+          height={image.height}
+          loading="lazy"
+          decoding="async"
+        />
+      )}
+
+      {closing && (
+        <p class={`mt-8 leading-relaxed font-medium ${isDark ? 'text-white' : 'text-text-heading'}`}>
+          {closing}
+        </p>
+      )}
+      {cta && (
+        <div class="mt-8">
+          <Button href={cta.href} variant={isDark ? 'outline' : 'primary'}>{cta.text}</Button>
+        </div>
+      )}
+    </div>
+
+    <!-- Right — numbered editorial list -->
+    <ol class={`lg:col-span-7 flex flex-col border-t ${ruleColor}`}>
+      {struggles.map((struggle, i) => (
+        <li class={`flex gap-6 md:gap-10 py-6 border-b ${ruleColor}`}>
+          <span class={`font-heading text-2xl md:text-3xl leading-none pt-1 ${indexColor}`}>
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <span class={`text-lg md:text-xl leading-snug ${itemText}`}>{struggle}</span>
+        </li>
+      ))}
+    </ol>
+
+  </div>
+
+</SectionWrapper>

@@ -1,0 +1,66 @@
+---
+import { Icon } from 'astro-icon/components';
+import { twMerge } from 'tailwind-merge';
+import type { CallToAction as Props } from '~/types';
+
+const {
+  variant = 'secondary',
+  target,
+  text = Astro.slots.render('default'),
+  icon = '',
+  class: className = '',
+  type,
+  ...rest
+} = Astro.props;
+
+/*
+  Editorial buttons — sharp corners, uppercase tracked labels, thin rules.
+  Primary is an ink fill; secondary is an ink outline; outline is for dark
+  section backgrounds. link/tertiary are inline underline actions.
+*/
+const base =
+  'inline-flex items-center justify-center font-semibold uppercase tracking-[0.14em] text-[0.78rem] leading-none transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-text-heading';
+
+const variants: Record<string, string> = {
+  primary: twMerge(
+    base,
+    'bg-accent text-white px-8 py-4 rounded-[var(--radius-button)] hover:bg-primary-dark'
+  ),
+  secondary: twMerge(
+    base,
+    'border border-text-heading text-text-heading px-8 py-4 rounded-[var(--radius-button)] hover:bg-text-heading hover:text-white'
+  ),
+  outline: twMerge(
+    base,
+    'border border-white/60 text-white px-8 py-4 rounded-[var(--radius-button)] hover:bg-white hover:text-accent hover:border-white'
+  ),
+  link: 'group inline-flex items-center gap-2 font-semibold uppercase tracking-[0.14em] text-[0.78rem] text-text-heading border-b border-text-heading/30 pb-1 hover:border-text-heading transition-colors duration-200',
+  tertiary:
+    'group inline-flex items-center gap-2 font-semibold uppercase tracking-[0.14em] text-[0.78rem] text-text-heading border-b border-text-heading/30 pb-1 hover:border-text-heading transition-colors duration-200',
+};
+
+const classes = twMerge(variants[variant] ?? variants.secondary, className);
+const isInline = variant === 'link' || variant === 'tertiary';
+---
+
+{
+  type === 'button' || type === 'submit' || type === 'reset' ? (
+    <button type={type} class={classes} {...rest}>
+      <Fragment set:html={text} />
+      {icon && <Icon name={icon} class="w-4 h-4 ml-2 inline-block" />}
+    </button>
+  ) : (
+    <a
+      class={classes}
+      {...(target ? { target, rel: 'noopener noreferrer' } : {})}
+      {...rest}
+    >
+      <Fragment set:html={text} />
+      {isInline ? (
+        <Icon name="tabler:arrow-right" class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+      ) : (
+        icon && <Icon name={icon} class="w-4 h-4 ml-2 inline-block" />
+      )}
+    </a>
+  )
+}

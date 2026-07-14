@@ -1,0 +1,52 @@
+---
+export interface InsuranceLogo {
+  src?: string;
+  name: string;
+  alt?: string;
+}
+
+export interface Props {
+  eyebrow?: string;
+  logos: InsuranceLogo[];
+  background?: 'base' | 'subtle';
+}
+
+const {
+  eyebrow = 'Trusted by',
+  logos,
+  background = 'base',
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base: 'bg-bg-base',
+  subtle: 'bg-bg-subtle',
+};
+---
+
+<div class={`${bgMap[background]} border-y border-border`} data-section-bg={background}>
+  <div class="container-page py-8">
+    <div class="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-12 items-center">
+
+      <p class="eyebrow text-text-muted whitespace-nowrap">{eyebrow}</p>
+
+      <div class="flex flex-wrap items-center gap-x-10 gap-y-4 md:justify-end">
+        {logos.map((logo) =>
+          logo.src ? (
+            <img
+              src={logo.src}
+              alt={logo.alt ?? logo.name}
+              class="h-6 w-auto object-contain grayscale opacity-50 hover:opacity-80 transition-opacity duration-150"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <span class="font-heading text-xl md:text-2xl text-text-heading/70">
+              {logo.name}
+            </span>
+          )
+        )}
+      </div>
+
+    </div>
+  </div>
+</div>

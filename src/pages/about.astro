@@ -1,0 +1,159 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import PageHero from '~/components/sections/PageHero.astro';
+import AboutStory from '~/components/sections/AboutStory.astro';
+import FunFacts from '~/components/sections/FunFacts.astro';
+import Credentials from '~/components/sections/Credentials.astro';
+import ExploreMore from '~/components/sections/ExploreMore.astro';
+import CtaFinal from '~/components/sections/CtaFinal.astro';
+
+const metadata = {
+  title: 'About',
+  description:
+    'Meet Rowan Ellis, founder of Meridian — a considered practice built on rigor, flexibility, and work designed around your real life.',
+};
+---
+
+<Layout metadata={metadata}>
+
+  {/* 1. Hero */}
+  <PageHero
+    variant="split"
+    background="accent2-light"
+    eyebrow="The practice"
+    heading="I help people do their best work — <em>without burning out.</em>"
+    body={[
+      "I'm the founder of Meridian, and I've sat exactly where you're sitting: capable, driven, and quietly wondering why something that should be straightforward feels so hard.",
+      'This work isn\'t just what I do. It\'s personal.',
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=900&q=80',
+      alt: 'Rowan Ellis, founder of Meridian',
+      width: 900,
+    }}
+  />
+
+  {/* 2. Story */}
+  <AboutStory
+    name="Rowan Ellis"
+    title="Founder & Lead Practitioner · Meridian"
+    intro={[
+      "My early years weren't tidy. Like a lot of the people I work with now, I spent years chasing the 'right' system — every framework, every method, starting over again and again. I knew exactly what I was supposed to do, and still couldn't make it hold.",
+      'It wasn\'t until I stopped following someone else\'s rules that things actually changed.',
+      'That shift is the foundation of everything I do with clients today. I bring the rigor and the expertise — but also the lived experience of someone who\'s been in the messy middle of it.',
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=900&q=80',
+      alt: 'Rowan Ellis at work',
+      width: 900,
+    }}
+    cta={{ text: 'Explore the work', href: '/services' }}
+    cards={[
+      {
+        heading: 'Why I do this work',
+        body: "Because I spent too many years treating the work as something to survive rather than shape. I know what it's like to have all the knowledge and still feel stuck — and I know there's a better way to practice.",
+      },
+      {
+        heading: 'My approach',
+        body: 'Rigorous, flexible, and built around your actual life — not an idealized version of it. No rigid templates, no forbidden lists. Just a way of working you can understand and sustain on your own.',
+      },
+      {
+        heading: 'Away from the desk',
+        body: "When I'm not with clients you'll find me cooking something ambitious on a Sunday, walking long distances with no particular destination, or deep in a good book. Remote-first, working with people wherever they are.",
+      },
+    ]}
+    background="base"
+  />
+
+  {/* 3. Off the record — flip cards */}
+  <FunFacts
+    eyebrow="Off the record"
+    heading="A few things about me."
+    facts={[
+      { icon: 'tabler:coffee', label: 'My morning ritual', fact: 'One good coffee, made slowly. I have strong opinions and no apologies.' },
+      { icon: 'tabler:book', label: 'Currently reading', fact: 'I keep a running list and rotate between research, memoir, and the occasional mystery.' },
+      { icon: 'tabler:walk', label: 'How I think', fact: 'On foot. Most of my best ideas arrive somewhere around the third mile.' },
+      { icon: 'tabler:plant', label: 'Ongoing project', fact: "I'm convinced I have a gift for growing herbs. The evidence disagrees. We continue." },
+      { icon: 'tabler:music', label: 'Always on', fact: 'Something instrumental while I work. Words in two places at once never ends well.' },
+      { icon: 'tabler:world', label: 'Dream trip', fact: 'Anywhere with a slower pace, a long table, and nowhere in particular to be.' },
+    ]}
+    background="subtle"
+  />
+
+  {/* 4. Credentials */}
+  <Credentials
+    eyebrow="Background"
+    heading="Training & credentials."
+    groups={[
+      {
+        label: 'Education',
+        icon: 'tabler:school',
+        items: [
+          'M.S. — [Field], [University]',
+          'B.A. — [Field], [University]',
+          'Advanced training — [Program or Institute]',
+        ],
+      },
+      {
+        label: 'Certifications',
+        icon: 'tabler:certificate',
+        items: [
+          '[Professional Certification]',
+          '[Licensure or Accreditation]',
+          '[Specialist Credential]',
+        ],
+      },
+      {
+        label: 'Memberships',
+        icon: 'tabler:users',
+        items: [
+          '[Professional Association]',
+          '[Regional Body]',
+          '[Special Interest Group]',
+        ],
+      },
+    ]}
+    background="base"
+  />
+
+  {/* 5. Explore more */}
+  <ExploreMore
+    eyebrow="Keep exploring"
+    heading="There's more to discover."
+    cards={[
+      {
+        image: {
+          src: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80',
+          alt: 'A one-on-one working session',
+        },
+        label: 'Work with me',
+        heading: 'See how we can work together.',
+        description: 'From private consultation to a group program — find the right fit for where you are now.',
+        href: '/services',
+        ctaLabel: 'View services',
+      },
+      {
+        image: {
+          src: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+          alt: 'The free field guide',
+        },
+        label: 'Free resource',
+        heading: 'Five ideas that quietly keep people stuck.',
+        description: 'A short field guide to the assumptions that hold most people back — and what to do instead.',
+        href: '#lead-magnet',
+        ctaLabel: 'Get the field guide',
+      },
+    ]}
+    background="subtle"
+  />
+
+  {/* 6. Final CTA */}
+  <CtaFinal
+    eyebrow="Ready to begin?"
+    heading="You don't have to figure this out <em>alone.</em>"
+    subheading="Book a free twenty-minute discovery call and let's talk about what's been getting in the way."
+    primaryCta={{ text: 'Book a Discovery Call', href: '/booking' }}
+    background="primary"
+  />
+
+</Layout>

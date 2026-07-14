@@ -1,0 +1,69 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface Outcome {
+  icon: string;
+  headline: string;
+  description: string;
+}
+
+export interface Props {
+  heading: string;
+  intro?: string;
+  outcomes: Outcome[];
+  closingLine?: string;
+  background?: 'base' | 'subtle' | 'accent-light' | 'accent2-light' | 'primary' | 'accent' | 'accent2';
+}
+
+const { heading, intro, outcomes, closingLine, background = 'accent-light' } = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base: 'bg-bg-base',
+  subtle: 'bg-bg-subtle',
+  'accent-light': 'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+  primary: 'bg-primary',
+  accent: 'bg-accent',
+  accent2: 'bg-accent2',
+};
+
+const isDark = background === 'primary' || background === 'accent' || background === 'accent2';
+const headingText = isDark ? 'text-white' : '';
+const mutedText = isDark ? 'text-white/70' : 'text-text-muted';
+const iconColor = isDark ? 'text-white/70' : 'text-primary';
+const ruleColor = isDark ? 'border-white/20' : 'border-border';
+---
+
+<SectionWrapper class={bgMap[background]} bg={background}>
+
+  <!-- Header — split with wide right margin -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 md:mb-20">
+    <div class="lg:col-span-8">
+      <h2 class={`text-4xl md:text-6xl leading-[1.03] ${headingText}`} set:html={heading} />
+    </div>
+    {intro && (
+      <div class="lg:col-span-4 flex items-end">
+        <p class={`leading-relaxed ${mutedText}`}>{intro}</p>
+      </div>
+    )}
+  </div>
+
+  <!-- Outcomes — hairline-topped magazine cells -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-14">
+    {outcomes.map((outcome) => (
+      <div class={`border-t ${ruleColor} pt-7`}>
+        <Icon name={outcome.icon} class={`w-7 h-7 mb-5 ${iconColor}`} aria-hidden="true" />
+        <h3 class={`text-2xl mb-3 ${headingText}`}>{outcome.headline}</h3>
+        <p class={`leading-relaxed ${mutedText}`}>{outcome.description}</p>
+      </div>
+    ))}
+  </div>
+
+  {closingLine && (
+    <p class={`mt-16 md:mt-20 max-w-2xl font-heading text-2xl md:text-3xl italic leading-snug ${isDark ? 'text-white/80' : 'text-text-heading'}`}>
+      {closingLine}
+    </p>
+  )}
+
+</SectionWrapper>

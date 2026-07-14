@@ -1,0 +1,26 @@
+---
+export interface Props {
+  class?: string;
+  bg?: string;
+  spacing?: 'default' | 'tight' | 'loose';
+  /** Inner container width. Defaults to the standard page container. */
+  container?: 'page' | 'wide' | 'narrow';
+  [key: string]: unknown;
+}
+
+const { class: className = '', bg, spacing = 'default', container = 'page', ...rest } = Astro.props;
+
+const spacingClass = spacing === 'tight' ? 'section-py-tight' : spacing === 'loose' ? 'section-py-loose' : 'section-py';
+const containerClass =
+  container === 'wide' ? 'container-wide' : container === 'narrow' ? 'container-narrow' : 'container-page';
+---
+
+<section
+  class={`${spacingClass} ${className}`}
+  data-section-bg={bg}
+  {...rest}
+>
+  <div class={containerClass}>
+    <slot />
+  </div>
+</section>

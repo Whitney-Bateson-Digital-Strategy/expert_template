@@ -1,0 +1,253 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/sections/Hero.astro';
+import InsuranceBanner from '~/components/sections/InsuranceBanner.astro';
+import Pain from '~/components/sections/Pain.astro';
+import Transformation from '~/components/sections/Transformation.astro';
+import Services from '~/components/sections/Services.astro';
+import About from '~/components/sections/About.astro';
+import Process from '~/components/sections/Process.astro';
+import LeadMagnet from '~/components/sections/LeadMagnet.astro';
+import CtaFinal from '~/components/sections/CtaFinal.astro';
+import TestimonialsSimpleStacked from '~/components/sections/TestimonialsSimpleStacked.astro';
+
+const metadata = {
+  title: 'Meridian — A Practice for People Who Want to Do the Work Well',
+  ignoreTitleTemplate: true,
+  description:
+    'Meridian is a considered practice offering private consultation, group programs, and focused intensives — support built around your real life and goals.',
+};
+---
+
+<Layout
+  metadata={metadata}
+  showLeadMagnet={false}
+  announcement={{
+    text: 'Now accepting a small number of new clients for the coming season —',
+    ctaText: 'Book a call →',
+    href: '/booking',
+  }}
+>
+
+  {/* 1. Hero */}
+  <Hero
+    tagline="A considered practice"
+    headline="Work that fits the <em>life</em> you actually live."
+    subheadline="If you've outgrown one-size-fits-all advice, you're in the right place. Meridian helps you build a clear, sustainable way forward — designed around your goals, not someone else's template."
+    primaryCta={{ text: 'Book a Discovery Call', href: '/booking' }}
+    secondaryCta={{ text: 'Explore the work', href: '/services' }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80',
+      alt: 'A practitioner in a calm, considered workspace',
+      width: 900,
+    }}
+    trust={{
+      type: 'testimonial',
+      quote:
+        'Meridian doesn’t hand you a plan and wish you luck. They listen first, then build the work around your actual life. That’s what made it stick.',
+      author: 'Priya K. · Private client',
+    }}
+  />
+
+  {/* 2. Trusted-by strip */}
+  <InsuranceBanner
+    eyebrow="As featured in"
+    logos={[
+      { name: 'The Atlas' },
+      { name: 'Field Notes' },
+      { name: 'Quarterly' },
+      { name: 'Standard' },
+      { name: 'Ordinary' },
+    ]}
+  />
+
+  {/* 3. Pain — the familiar struggles */}
+  <Pain
+    heading="Does any of this sound <em>familiar?</em>"
+    intro="You're not stuck because you lack discipline. You've just been handed the wrong tools — and probably too many of them."
+    struggles={[
+      "You've tried every approach, but nothing ever seems to hold",
+      'You\'re exhausted by conflicting advice from every direction',
+      'You\'re doing "all the right things" and still feel off-track',
+      'You know what you should do — you just can\'t make it stick',
+      'The work has started to feel like something to manage, not enjoy',
+      'You want a partner who sees the whole picture, not a checklist',
+    ]}
+    closing="If you're nodding along, you're exactly who this practice is for."
+    cta={{ text: 'Book a Discovery Call', href: '/booking' }}
+    background="subtle"
+  />
+
+  {/* 4. Transformation — what changes */}
+  <Transformation
+    heading="Here's what <em>changes.</em>"
+    intro="When the work finally fits your life instead of fighting it."
+    outcomes={[
+      {
+        icon: 'tabler:target-arrow',
+        headline: 'You get real clarity',
+        description:
+          'No more second-guessing. You know what matters, what to leave behind, and what your next move actually is.',
+      },
+      {
+        icon: 'tabler:battery-charging',
+        headline: 'Your momentum holds',
+        description:
+          'Progress stops depending on willpower. A flexible framework carries the weight so consistency gets easier, not harder.',
+      },
+      {
+        icon: 'tabler:brain',
+        headline: 'The noise quiets down',
+        description:
+          'You stop chasing every new tactic and trust the plan you built. Fewer decisions, less friction, more done.',
+      },
+      {
+        icon: 'tabler:heart-handshake',
+        headline: 'You have real support',
+        description:
+          'Not another app or template. A partner who knows your context and adjusts the work as your life changes.',
+      },
+    ]}
+    closingLine="This was never about doing more. It's about building something that holds."
+    background="accent-light"
+  />
+
+  {/* 5. Services */}
+  <Services
+    heading="How we can <em>work together.</em>"
+    intro="Every path is different. These are the ways clients work with the practice — from deep one-on-one work to focused, single-session intensives."
+    services={[
+      {
+        image: {
+          src: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80',
+          alt: 'A one-on-one working session',
+          width: 800,
+        },
+        label: 'One-on-one',
+        name: 'Private Consultation',
+        description:
+          'The deep work — your context, your history, your goals. Ongoing sessions, held virtually or in person, built entirely around what\'s really in your way.',
+        ctaLabel: 'Learn more',
+        ctaHref: '/services#private',
+      },
+      {
+        image: {
+          src: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80',
+          alt: 'A small group program in session',
+          width: 800,
+        },
+        label: 'Group program',
+        name: 'The Cohort',
+        description:
+          'A ten-week live program for people ready to stop starting over. The same framework as private work, plus the momentum of doing it alongside others.',
+        ctaLabel: 'Learn more',
+        ctaHref: '/services#cohort',
+      },
+      {
+        image: {
+          src: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80',
+          alt: 'A focused single working session',
+          width: 800,
+        },
+        label: 'Single session',
+        name: 'The Intensive',
+        description:
+          'Not ready for ongoing work? One focused ninety-minute session to cut through the confusion and leave with concrete next steps — no commitment required.',
+        ctaLabel: 'Learn more',
+        ctaHref: '/services#intensive',
+      },
+    ]}
+    background="base"
+  />
+
+  {/* 6. Testimonials */}
+  <TestimonialsSimpleStacked
+    heading="In their words"
+    testimonials={[
+      {
+        quote:
+          'I came in expecting another rigid plan. What I got was an entirely different way of thinking about the work — and for the first time in years, it actually stuck.',
+        name: 'Jordan M.',
+        detail: 'The Cohort',
+      },
+      {
+        quote:
+          'They cut through the noise and helped me see the real problem wasn\'t effort — it was that everything I\'d tried was fighting how I actually live.',
+        name: 'Priya K.',
+        detail: 'Private client',
+      },
+    ]}
+    seeMoreLabel="Read more stories"
+    seeMoreHref="/services"
+    background="base"
+  />
+
+  {/* 7. About intro */}
+  <About
+    eyebrow="The practice"
+    heading="Hi, I'm Rowan — and I've been <em>where you are.</em>"
+    body={[
+      'For years I chased the "right" way to do the work — every system, every framework, starting over again and again. Nothing changed until I stopped following someone else\'s rules.',
+      'Today I work with people ready for a different approach: rigorous, flexible, and built around your real life. The expertise and the lived experience, with zero judgment.',
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=900&q=80',
+      alt: 'Rowan Ellis, founder of Meridian',
+      width: 900,
+    }}
+    cta={{ text: 'More about the practice', href: '/about' }}
+    panelBackground="accent2-light"
+  />
+
+  {/* 8. Process */}
+  <Process
+    eyebrow="How it works"
+    heading="Getting started is simpler <em>than you think.</em>"
+    intro="Three steps from where you are now to work that finally holds."
+    steps={[
+      {
+        title: 'Book a discovery call.',
+        description:
+          'Twenty minutes to get to know each other. You share what\'s been going on, I answer your questions, and together we figure out whether working together makes sense. No pressure, no obligation.',
+      },
+      {
+        title: 'We build your plan together.',
+        description:
+          'Your first full session is where we go deep — your context, your goals, your real constraints. I build a plan from there, not from a template.',
+      },
+      {
+        title: 'You start seeing it work.',
+        description:
+          'We meet regularly, adjust as needed, and you build real momentum over time. Most clients notice meaningful shifts within the first few weeks — not months.',
+      },
+    ]}
+    cta={{ text: 'Book your call', href: '/booking' }}
+    background="base"
+    spacing="loose"
+  />
+
+  {/* 9. Lead magnet */}
+  <LeadMagnet
+    eyebrow="Free field guide"
+    heading="Five ideas that quietly keep people stuck"
+    description="Confused by conflicting advice? This short field guide breaks down the five assumptions that hold most people back — and what to do instead."
+    image={{
+      src: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+      alt: 'The free field guide',
+      width: 800,
+    }}
+    ctaLabel="Get the field guide"
+    ctaHref="#"
+    background="accent"
+  />
+
+  {/* 10. Final CTA */}
+  <CtaFinal
+    eyebrow="Ready to begin?"
+    heading="You don't have to figure this out <em>alone.</em>"
+    subheading="Book a free twenty-minute discovery call and let's talk about what's been getting in the way."
+    primaryCta={{ text: 'Book a Discovery Call', href: '/booking' }}
+    background="primary"
+  />
+
+</Layout>
