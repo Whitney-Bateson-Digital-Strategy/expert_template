@@ -9,9 +9,9 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: 'Meridian — A Practice for People Who Want to Do the Work Well'
-    template: '%s — Meridian'
-  description: 'Meridian is a considered practice offering private consultation, group programs, and focused intensives — support built around your real life and goals.'
+    default: 'Meridian: A Practice for People Who Want to Do the Work Well'
+    template: '%s: Meridian'
+  description: 'Meridian is a considered practice offering private consultation, group programs, and focused intensives, support built around your real life and goals.'
   robots:
     index: true
     follow: true

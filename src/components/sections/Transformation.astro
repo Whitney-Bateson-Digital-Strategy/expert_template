@@ -37,15 +37,11 @@ const ruleColor = isDark ? 'border-white/20' : 'border-border';
 
 <SectionWrapper class={bgMap[background]} bg={background}>
 
-  <!-- Header — split with wide right margin -->
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 md:mb-20">
-    <div class="lg:col-span-8">
-      <h2 class={`text-4xl md:text-6xl leading-[1.03] ${headingText}`} set:html={heading} />
-    </div>
+  <!-- Header -->
+  <div class="max-w-3xl mb-16 md:mb-20">
+    <h2 class={`text-4xl md:text-6xl leading-[1.03] ${headingText}`} set:html={heading} />
     {intro && (
-      <div class="lg:col-span-4 flex items-end">
-        <p class={`leading-relaxed ${mutedText}`}>{intro}</p>
-      </div>
+      <p class={`mt-6 max-w-2xl leading-relaxed ${mutedText}`}>{intro}</p>
     )}
   </div>
 
