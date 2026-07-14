@@ -1,6 +1,8 @@
 @import "tailwindcss";
-@import "@fontsource-variable/outfit";
-@import "@fontsource-variable/cormorant";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/fraunces/wght-italic.css";
+@import "@fontsource-variable/karla";
+@import "@fontsource/great-vibes";
 @plugin "@tailwindcss/typography";
 
 /*
@@ -12,33 +14,34 @@
 */
 
 @theme {
-  /* Colors — core palette (neutral by default, fully swappable).
-     Tuned to a warm cream + espresso editorial register. */
-  --color-primary: #6c6150;         /* warm taupe/stone — eyebrows, labels, icons, rules, one taupe CTA section */
-  --color-primary-dark: #4c4234;    /* darker taupe — secondary button border/text, link hovers */
-  --color-secondary: #e8e0d1;       /* pale stone — chips, badge + card backgrounds */
-  --color-accent: #33281d;          /* warm espresso — primary buttons, heading italic accents, dark feature blocks */
-  --color-accent-light: #ece3d3;    /* warm paper — soft section backgrounds, card backs */
-  --color-accent2: #7c6f57;         /* muted sand — occasional third accent */
-  --color-accent2-light: #efe6d6;   /* pale sand — panel backgrounds */
+  /* Colors — "Sweet Pea" palette mapped onto the template's semantic slots.
+     Token NAMES are unchanged (matched-set architecture); only VALUES differ. */
+  --color-primary: #a94850;         /* Lead · Raspberry — eyebrows, labels, icons, rules, links, one accent CTA band */
+  --color-primary-dark: #8f3a42;    /* darker raspberry — link hovers, secondary button border/text */
+  --color-secondary: #dffdbb;       /* Wash · Lime — chips, badges, tags, highlight */
+  --color-accent: #3b3134;          /* Ink · Plum Charcoal — primary buttons + dark feature blocks */
+  --color-accent-light: #f7e7e8;    /* pale rose — soft section backgrounds, card backs */
+  --color-accent2: #2e7c93;         /* Spice · Teal — occasional friction accent */
+  --color-accent2-light: #d3e7ee;   /* soft powder — panel backgrounds */
 
   /* Surfaces */
-  --color-bg-base: #f7f2e8;         /* warm cream — default section background */
-  --color-bg-subtle: #efe7d9;       /* deeper cream — alternating sections */
-  --color-bg-card: #fffdf8;
+  --color-bg-base: #fdfaf6;         /* Base · Warm White — default section background */
+  --color-bg-subtle: #e7f1f4;       /* light powder — alternating sections */
+  --color-bg-card: #ffffff;
 
   /* Text */
-  --color-text-base: #35302a;       /* warm near-black body */
-  --color-text-heading: #241d16;    /* espresso ink headings */
-  --color-text-muted: #6f6857;      /* warm gray */
+  --color-text-base: #3b3134;       /* Ink — body */
+  --color-text-heading: #322a2c;    /* deeper Ink — headings */
+  --color-text-muted: #6e5f63;      /* muted plum */
 
   /* Borders */
-  --color-border: #dcd3c2;          /* warm hairline */
-  --color-border-strong: #c2b7a1;
+  --color-border: #e9dfda;          /* warm hairline */
+  --color-border-strong: #cdbfbc;
 
   /* Typography */
-  --font-heading: 'Cormorant Variable', Georgia, serif;
-  --font-body: 'Outfit Variable', ui-sans-serif, sans-serif;
+  --font-heading: 'Fraunces Variable', Georgia, serif;
+  --font-body: 'Karla Variable', ui-sans-serif, sans-serif;
+  --font-script: 'Great Vibes', cursive;  /* accent script — eyebrows/closings, used sparingly */
 
   /* Radius — flatter / sharper than the classic template (editorial) */
   --radius-button: 0.125rem;
