@@ -39,10 +39,6 @@ const ruleColor = isDark ? 'border-white/20' : 'border-border';
 
   <!-- Header -->
   <div class="max-w-3xl mb-16 md:mb-20">
-    <div class="mb-6 flex items-center gap-4">
-      <span class={`w-px h-8 ${isDark ? 'bg-white/50' : 'bg-primary/60'}`} aria-hidden="true"></span>
-      <p class={`eyebrow ${isDark ? 'text-white/70' : 'text-primary'}`}>N&#176;02</p>
-    </div>
     <h2 class={`text-4xl md:text-6xl leading-[1.03] ${headingText}`} set:html={heading} />
     {intro && (
       <p class={`mt-6 max-w-2xl leading-relaxed ${mutedText}`}>{intro}</p>

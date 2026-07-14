@@ -40,10 +40,6 @@ const linkColor = isDark ? 'text-white border-white/40 hover:border-white' : 'te
 
   <!-- Header -->
   <div class="max-w-3xl mb-14 md:mb-20">
-    <div class="mb-6 flex items-center gap-4">
-      <span class={`w-px h-8 ${isDark ? 'bg-white/50' : 'bg-primary/60'}`} aria-hidden="true"></span>
-      <p class={`eyebrow ${labelColor}`}>N&#176;03</p>
-    </div>
     <h2 class={`text-4xl md:text-6xl leading-[1.03] ${headingText}`} set:html={heading} />
     {intro && (
       <p class={`mt-6 max-w-2xl leading-relaxed ${mutedText}`}>{intro}</p>
@@ -55,11 +51,11 @@ const linkColor = isDark ? 'text-white border-white/40 hover:border-white' : 'te
     {services.map((service, i) => (
       <a href={service.ctaHref} class="group flex flex-col" aria-label={`${service.ctaLabel}: ${service.name}`}>
 
-        <div class="overflow-hidden mb-6 duotone">
+        <div class="overflow-hidden mb-6">
           <img
             src={service.image.src}
             alt={service.image.alt}
-            class="w-full aspect-[5/4] object-cover transition-transform duration-500 group-hover:scale-105"
+            class="w-full aspect-[5/4] object-cover grayscale-[20%] transition-transform duration-500 group-hover:scale-105"
             width={service.image.width}
             height={service.image.height}
             loading="lazy"
