@@ -41,9 +41,10 @@ const { tagline, headline, subheadline, primaryCta, secondaryCta, image, trust }
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-end">
 
       <div class="lg:col-span-7 lg:pb-20">
-        {tagline && (
-          <p class="eyebrow text-primary mb-8">{tagline}</p>
-        )}
+        <div class="mb-8 flex items-center gap-4">
+          <span class="w-px h-8 bg-primary/60" aria-hidden="true"></span>
+          <p class="eyebrow text-primary">{`N°01${tagline ? ` · ${tagline}` : ''}`}</p>
+        </div>
 
         <h1 class="max-w-[15ch] text-[2.9rem] sm:text-6xl lg:text-[5.5rem] leading-[0.98]">
           <Fragment set:html={headline} />
@@ -62,17 +63,16 @@ const { tagline, headline, subheadline, primaryCta, secondaryCta, image, trust }
       </div>
 
       <div class="lg:col-span-5 relative">
-        <div class="relative">
+        <div class="relative duotone">
           <img
             src={image.src}
             alt={image.alt}
-            class="w-full h-[22rem] sm:h-[26rem] lg:h-[30rem] xl:h-[34rem] object-cover object-center grayscale-[15%]"
+            class="w-full h-[22rem] sm:h-[26rem] lg:h-[30rem] xl:h-[34rem] object-cover object-center"
             width={image.width}
             loading="eager"
             fetchpriority="high"
             decoding="async"
           />
-          <span class="absolute -top-3 -left-3 w-16 h-16 border-t border-l border-border-strong hidden lg:block" aria-hidden="true"></span>
         </div>
 
         {trust && (
