@@ -93,9 +93,9 @@ const bgMap: Record<string, string> = {
 
 {/* ─── PANELS: ink text panel + photo panel ─── */}
 {variant === 'panels' && image && (
-  <section class="grid grid-cols-1 md:grid-cols-[52fr_48fr] min-h-[560px]" data-section-bg="panels">
+  <section class="grid grid-cols-1 md:grid-cols-[52fr_48fr] min-h-[600px] md:min-h-[700px] lg:min-h-[780px]" data-section-bg="panels">
     <div
-      class="bg-accent flex flex-col justify-center py-20 md:py-28 pr-10 md:pr-16"
+      class="bg-accent flex flex-col justify-center py-24 md:py-36 lg:py-44 pr-10 md:pr-16"
       style="padding-left: max(1.5rem, calc((100vw - 96rem) / 2 + 3rem));"
     >
       <div class="max-w-xl">
@@ -113,7 +113,7 @@ const bgMap: Record<string, string> = {
       </div>
     </div>
 
-    <div class={`relative min-h-[320px] ${hideImageOnMobile ? 'hidden md:block' : ''}`}>
+    <div class={`relative min-h-[380px] ${hideImageOnMobile ? 'hidden md:block' : ''}`}>
       <img src={image.src} alt={image.alt} width={image.width} height={image.height}
         class="absolute inset-0 w-full h-full object-cover object-center grayscale-[20%]"
         loading="eager" decoding="async" />

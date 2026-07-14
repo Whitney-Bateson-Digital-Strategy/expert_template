@@ -15,9 +15,10 @@ export interface Props {
   cta?: { text: string; href: string };
   background?: 'base' | 'subtle' | 'accent-light' | 'accent2-light' | 'primary' | 'accent' | 'accent2';
   spacing?: 'default' | 'tight' | 'loose';
+  variant?: 'rows' | 'timeline';
 }
 
-const { eyebrow, heading, intro, steps, cta, background = 'base', spacing = 'default' } = Astro.props;
+const { eyebrow, heading, intro, steps, cta, background = 'base', spacing = 'default', variant = 'rows' } = Astro.props;
 
 const bgMap: Record<string, string> = {
   base: 'bg-bg-base',
@@ -35,6 +36,12 @@ const mutedText = isDark ? 'text-white/70' : 'text-text-muted';
 const eyebrowColor = isDark ? 'text-white/60' : 'text-primary';
 const indexColor = isDark ? 'text-white/30' : 'text-border-strong';
 const ruleColor = isDark ? 'border-white/20' : 'border-border';
+
+// Timeline variant tokens
+const lineColor = isDark ? 'bg-white/20' : 'bg-border';
+const nodeBg = bgMap[background];
+const nodeBorder = isDark ? 'border-white/30' : 'border-border-strong';
+const numberColor = isDark ? 'text-white' : 'text-text-heading';
 ---
 
 <SectionWrapper class={bgMap[background]} bg={background} spacing={spacing}>
@@ -50,28 +57,55 @@ const ruleColor = isDark ? 'border-white/20' : 'border-border';
     )}
   </div>
 
-  <!-- Steps — oversized index / title / description rows -->
-  <div class={`border-t ${ruleColor}`}>
-    {steps.map((step, i) => (
-      <div
-        class={`grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-10 md:py-12 border-b ${ruleColor} items-baseline`}
-        data-reveal
-        data-reveal-delay={i * 90}
-      >
-        <div class="md:col-span-2">
-          <span class={`font-heading text-5xl md:text-6xl leading-none ${indexColor}`}>
-            {String(i + 1).padStart(2, '0')}
-          </span>
-        </div>
-        <div class="md:col-span-4">
-          <h3 class={`text-2xl md:text-3xl ${headingText}`}>{step.title}</h3>
-        </div>
-        <div class="md:col-span-6">
-          <p class={`leading-relaxed ${mutedText}`}>{step.description}</p>
-        </div>
+  {variant === 'timeline' ? (
+    <!-- Steps — connected timeline (nodes joined by a line) -->
+    <div class="relative">
+      <!-- Desktop: horizontal connector through node centers -->
+      <div class={`hidden md:block absolute top-7 left-0 right-0 h-px ${lineColor}`} aria-hidden="true"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8">
+        {steps.map((step, i) => (
+          <div class="flex gap-5 md:block" data-reveal data-reveal-delay={i * 90}>
+            <div class="flex flex-col items-center md:block flex-shrink-0">
+              <span class={`relative z-10 flex items-center justify-center w-14 h-14 rounded-full border ${nodeBorder} ${nodeBg} font-heading text-xl md:text-2xl ${numberColor}`}>
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              {i < steps.length - 1 && (
+                <span class={`md:hidden w-px flex-1 mt-2 ${lineColor}`} aria-hidden="true"></span>
+              )}
+            </div>
+            <div class="pb-12 md:pb-0 md:mt-7">
+              <h3 class={`text-2xl md:text-[1.7rem] leading-tight ${headingText}`}>{step.title}</h3>
+              <p class={`mt-3 leading-relaxed ${mutedText}`}>{step.description}</p>
+            </div>
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
+    </div>
+  ) : (
+    <!-- Steps — oversized index / title / description rows -->
+    <div class={`border-t ${ruleColor}`}>
+      {steps.map((step, i) => (
+        <div
+          class={`grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-10 md:py-12 border-b ${ruleColor} items-baseline`}
+          data-reveal
+          data-reveal-delay={i * 90}
+        >
+          <div class="md:col-span-2">
+            <span class={`font-heading text-5xl md:text-6xl leading-none ${indexColor}`}>
+              {String(i + 1).padStart(2, '0')}
+            </span>
+          </div>
+          <div class="md:col-span-4">
+            <h3 class={`text-2xl md:text-3xl ${headingText}`}>{step.title}</h3>
+          </div>
+          <div class="md:col-span-6">
+            <p class={`leading-relaxed ${mutedText}`}>{step.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
 
   {cta && (
     <div class="mt-14">
