@@ -42,9 +42,7 @@ const hintColor = isDark ? 'text-white/50' : 'text-text-muted';
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12 md:mb-16">
       <div>
         {eyebrow && (
-          <div class="flex items-center gap-4 mb-5">
-            <span class={`h-px w-8 ${isDark ? 'bg-white/40' : 'bg-border-strong'}`} aria-hidden="true"></span>
-            <p class={`eyebrow ${eyebrowColor}`}>{eyebrow}</p>
+          <div class="flex items-center gap-4 mb-5">            <p class={`eyebrow ${eyebrowColor}`}>{eyebrow}</p>
           </div>
         )}
         {heading && <h2 class={`text-4xl md:text-5xl ${headingText}`}>{heading}</h2>}

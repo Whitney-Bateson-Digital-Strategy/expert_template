@@ -39,21 +39,17 @@ const linkColor = isDark ? 'text-white border-white/40 hover:border-white' : 'te
 <SectionWrapper class={bgMap[background]} bg={background}>
 
   <!-- Header -->
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-14 md:mb-20">
-    <div class="lg:col-span-8">
-      <h2 class={`text-4xl md:text-6xl leading-[1.03] ${headingText}`} set:html={heading} />
-    </div>
+  <div class="max-w-3xl mb-14 md:mb-20">
+    <h2 class={`text-4xl md:text-6xl leading-[1.03] ${headingText}`} set:html={heading} />
     {intro && (
-      <div class="lg:col-span-4">
-        <p class={`leading-relaxed ${mutedText}`}>{intro}</p>
-      </div>
+      <p class={`mt-6 max-w-2xl leading-relaxed ${mutedText}`}>{intro}</p>
     )}
   </div>
 
   <!-- Service cards -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-14">
     {services.map((service, i) => (
-      <a href={service.ctaHref} class="group flex flex-col" aria-label={`${service.ctaLabel} — ${service.name}`}>
+      <a href={service.ctaHref} class="group flex flex-col" aria-label={`${service.ctaLabel}: ${service.name}`}>
 
         <div class="overflow-hidden mb-6">
           <img

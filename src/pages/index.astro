@@ -12,10 +12,10 @@ import CtaFinal from '~/components/sections/CtaFinal.astro';
 import TestimonialsSimpleStacked from '~/components/sections/TestimonialsSimpleStacked.astro';
 
 const metadata = {
-  title: 'Meridian — A Practice for People Who Want to Do the Work Well',
+  title: 'Meridian: A Practice for People Who Want to Do the Work Well',
   ignoreTitleTemplate: true,
   description:
-    'Meridian is a considered practice offering private consultation, group programs, and focused intensives — support built around your real life and goals.',
+    'Meridian is a considered practice offering private consultation, group programs, and focused intensives, all built around your real life and goals.',
 };
 ---
 
@@ -23,7 +23,7 @@ const metadata = {
   metadata={metadata}
   showLeadMagnet={false}
   announcement={{
-    text: 'Now accepting a small number of new clients for the coming season —',
+    text: 'Now accepting a small number of new clients for the coming season.',
     ctaText: 'Book a call →',
     href: '/booking',
   }}
@@ -33,12 +33,12 @@ const metadata = {
   <Hero
     tagline="A considered practice"
     headline="Work that fits the <em>life</em> you actually live."
-    subheadline="If you've outgrown one-size-fits-all advice, you're in the right place. Meridian helps you build a clear, sustainable way forward — designed around your goals, not someone else's template."
+    subheadline="If you've outgrown one-size-fits-all advice, you're in the right place. Meridian helps you build a clear, sustainable way forward, designed around your goals, not someone else's template."
     primaryCta={{ text: 'Book a Discovery Call', href: '/booking' }}
     secondaryCta={{ text: 'Explore the work', href: '/services' }}
     image={{
-      src: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80',
-      alt: 'A practitioner in a calm, considered workspace',
+      src: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=900&q=80',
+      alt: 'Rowan Ellis, founder of Meridian',
       width: 900,
     }}
     trust={{
@@ -64,12 +64,12 @@ const metadata = {
   {/* 3. Pain — the familiar struggles */}
   <Pain
     heading="Does any of this sound <em>familiar?</em>"
-    intro="You're not stuck because you lack discipline. You've just been handed the wrong tools — and probably too many of them."
+    intro="You're not stuck because you lack discipline. You've just been handed the wrong tools, and probably too many of them."
     struggles={[
       "You've tried every approach, but nothing ever seems to hold",
       'You\'re exhausted by conflicting advice from every direction',
       'You\'re doing "all the right things" and still feel off-track',
-      'You know what you should do — you just can\'t make it stick',
+      'You know what you should do, but you just can\'t make it stick',
       'The work has started to feel like something to manage, not enjoy',
       'You want a partner who sees the whole picture, not a checklist',
     ]}
@@ -115,7 +115,7 @@ const metadata = {
   {/* 5. Services */}
   <Services
     heading="How we can <em>work together.</em>"
-    intro="Every path is different. These are the ways clients work with the practice — from deep one-on-one work to focused, single-session intensives."
+    intro="Every path is different. These are the ways clients work with the practice, from deep one-on-one work to focused, single-session intensives."
     services={[
       {
         image: {
@@ -126,7 +126,7 @@ const metadata = {
         label: 'One-on-one',
         name: 'Private Consultation',
         description:
-          'The deep work — your context, your history, your goals. Ongoing sessions, held virtually or in person, built entirely around what\'s really in your way.',
+          'The deep work: your context, your history, your goals. Ongoing sessions, held virtually or in person, built entirely around what\'s really in your way.',
         ctaLabel: 'Learn more',
         ctaHref: '/services#private',
       },
@@ -152,7 +152,7 @@ const metadata = {
         label: 'Single session',
         name: 'The Intensive',
         description:
-          'Not ready for ongoing work? One focused ninety-minute session to cut through the confusion and leave with concrete next steps — no commitment required.',
+          'Not ready for ongoing work? One focused ninety-minute session to cut through the confusion and leave with concrete next steps. No commitment required.',
         ctaLabel: 'Learn more',
         ctaHref: '/services#intensive',
       },
@@ -166,13 +166,13 @@ const metadata = {
     testimonials={[
       {
         quote:
-          'I came in expecting another rigid plan. What I got was an entirely different way of thinking about the work — and for the first time in years, it actually stuck.',
+          'I came in expecting another rigid plan. What I got was an entirely different way of thinking about the work, and for the first time in years, it actually stuck.',
         name: 'Jordan M.',
         detail: 'The Cohort',
       },
       {
         quote:
-          'They cut through the noise and helped me see the real problem wasn\'t effort — it was that everything I\'d tried was fighting how I actually live.',
+          'They cut through the noise and helped me see the real problem wasn\'t effort. It was that everything I\'d tried was fighting how I actually live.',
         name: 'Priya K.',
         detail: 'Private client',
       },
@@ -185,9 +185,9 @@ const metadata = {
   {/* 7. About intro */}
   <About
     eyebrow="The practice"
-    heading="Hi, I'm Rowan — and I've been <em>where you are.</em>"
+    heading="Hi, I'm Rowan, and I've been <em>where you are.</em>"
     body={[
-      'For years I chased the "right" way to do the work — every system, every framework, starting over again and again. Nothing changed until I stopped following someone else\'s rules.',
+      'For years I chased the "right" way to do the work: every system, every framework, starting over again and again. Nothing changed until I stopped following someone else\'s rules.',
       'Today I work with people ready for a different approach: rigorous, flexible, and built around your real life. The expertise and the lived experience, with zero judgment.',
     ]}
     image={{
@@ -213,12 +213,12 @@ const metadata = {
       {
         title: 'We build your plan together.',
         description:
-          'Your first full session is where we go deep — your context, your goals, your real constraints. I build a plan from there, not from a template.',
+          'Your first full session is where we go deep: your context, your goals, your real constraints. I build a plan from there, not from a template.',
       },
       {
         title: 'You start seeing it work.',
         description:
-          'We meet regularly, adjust as needed, and you build real momentum over time. Most clients notice meaningful shifts within the first few weeks — not months.',
+          'We meet regularly, adjust as needed, and you build real momentum over time. Most clients notice meaningful shifts within the first few weeks, not months.',
       },
     ]}
     cta={{ text: 'Book your call', href: '/booking' }}
@@ -230,7 +230,7 @@ const metadata = {
   <LeadMagnet
     eyebrow="Free field guide"
     heading="Five ideas that quietly keep people stuck"
-    description="Confused by conflicting advice? This short field guide breaks down the five assumptions that hold most people back — and what to do instead."
+    description="Confused by conflicting advice? This short field guide breaks down the five assumptions that hold most people back, and what to do instead."
     image={{
       src: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
       alt: 'The free field guide',
